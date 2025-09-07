@@ -1,10 +1,9 @@
 import "../styles/loginForm.css";
 import { useState } from "react";
 import api from "../services/axios";
-import PasswordInput from "./passwordInput";
+import PasswordInput from "./PasswordInput";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import axios, { AxiosError } from "axios";
 
 const LoginForm = () => {
   const navigate = useNavigate();
