@@ -1,7 +1,7 @@
 import api from "../services/axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
-import PasswordInput from "../components/passwordInput";
+import PasswordInput from "../components/PasswordInput";
 import HeaderApp from "../components/HeaderApp";
 import Swal from "sweetalert2";
 
