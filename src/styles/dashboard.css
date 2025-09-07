@@ -1,0 +1,71 @@
+span {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+button {
+  display: inline;
+}
+
+.dashboard {
+  display: flex;
+  justify-content: center;
+  align-content: flex-start;
+  min-height: 100vh;
+  width: 90vw;
+}
+
+h2.title-section {
+  display: flex;
+  margin: 0;
+  text-align: start;
+}
+
+.user {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+
+.user-image,
+.user-info {
+  display: flex;
+  margin: 0;
+}
+
+.user-image {
+  width: 30%;
+  & img {
+    width: 80%;
+    height: 80%;
+    border-radius: 10%;
+    -webkit-border-radius: 10%;
+    -moz-border-radius: 10%;
+    -ms-border-radius: 10%;
+    -o-border-radius: 10%;
+  }
+  & p {
+    text-align: start;
+  }
+}
+
+.user-info {
+  flex-direction: column;
+  justify-content: start;
+  & p {
+    text-align: start;
+  }
+}
+
+.user-cars {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+table {
+  width: 80%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
