@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Ignorar variables de entorno locales (contienen secretos)
+.env.local
+.env.*.local
+
+# Opcional: descomentar si quieres ignorar todos los .env
+.env
+.env.development
+.env.production
