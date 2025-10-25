@@ -3,6 +3,7 @@ import api from "../services/axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { formatDate } from "../utils/formatDate.utils";
+import { Button } from "../components/Button";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -37,6 +38,20 @@ const Dashboard = () => {
     navigate("/updateUser");
   };
 
+  const handleLogout = async () => {
+    try {
+      await api.post("/logout");
+    } catch (err) {
+      console.error("Error al cerrar sesión en el servidor:", err);
+    } finally {
+      localStorage.removeItem("userId");
+      localStorage.removeItem("currentUser");
+      localStorage.removeItem("vehicleId");
+      localStorage.removeItem("token");
+
+      navigate("/");
+    }
+  };
   if (error) {
     return <p>Error: {error}</p>;
   }
@@ -101,26 +116,27 @@ const Dashboard = () => {
                 <span>Ultima modificación:</span>
                 {formatDate(currentUser.updated_at)}
               </p>
-              <div>
-                <button
-                  className="btn btn-primary"
-                  type="button"
+              <div className="d-flex flex-row gap-2">
+                <Button
+                  color="btn-primary"
                   onClick={handleUpdateUser}
-                >
-                  Modificar datos
-                </button>
+                  text={"Modificar datos"}
+                />
+                <Button
+                  color="btn-danger"
+                  onClick={handleLogout}
+                  text={"Cerrar sesión"}
+                />
               </div>
             </div>
           </div>
           <div className="user-cars">
             <h2 className="title-section">Mis Vehículos</h2>
-            <button
-              className="btn btn-outline-success"
-              type="button"
+            <Button
+              color="btn-outline-success"
               onClick={() => navigate("/vehicleForm")}
-            >
-              Ingresar nuevo vehículo
-            </button>
+              text={"Ingresar nuevo vehículo"}
+            />
             <p>
               <em>
                 Para ver en datalle un vehículo en particular haga clic sobre el
