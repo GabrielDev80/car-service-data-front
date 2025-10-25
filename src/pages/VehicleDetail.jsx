@@ -120,7 +120,7 @@ const VehicleDetail = () => {
       const response = await api.get(`/vehicles/${vehicleId}`);
       setCurrentVehicle(response.data.payload);
     } catch (err) {
-      Swal.fire("Error", "Nose pudo actualizar el vehiculo.", "error");
+      Swal.fire("Error", "No se pudo actualizar el vehiculo.", err);
     }
   };
 
