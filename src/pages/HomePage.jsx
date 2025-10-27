@@ -4,6 +4,12 @@ import LoginPage from "./LoginPage";
 function HomePage() {
   const isLoggedIn = !!localStorage.getItem("authToken"); // Verifica si hay un token en el localStorage
 
-  return <>{isLoggedIn ? <Dashboard /> : <LoginPage />}</>;
+  return (
+    <>
+      <div className="homepage-container">
+        {isLoggedIn ? <Dashboard /> : <LoginPage />}
+      </div>
+    </>
+  );
 }
 export default HomePage;

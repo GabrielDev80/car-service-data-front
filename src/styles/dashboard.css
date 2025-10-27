@@ -1,71 +1,134 @@
+/* Layout principal */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* Títulos y labels */
+.dashboard-title {
+  font-weight: bold;
+  color: #222;
+  margin: 1rem 0;
+}
+
 span {
   font-size: 1rem;
   font-weight: bold;
   color: #333;
+  margin-right: 0.5rem;
 }
 
-button {
-  display: inline;
-}
-
-.dashboard {
+.dashboard-btn {
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  align-content: flex-start;
-  min-height: 100vh;
-  width: 90vw;
+  gap: 10px;
+  margin-top: 1rem;
 }
 
+/* secciones */
 h2.title-section {
-  display: flex;
-  margin: 0;
+  width: 100%;
+  margin: 0 0 0.5rem 0;
   text-align: start;
 }
 
+/* usuario: imagen + datos */
 .user {
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  width: 100%;
+  margin-top: 0.5rem;
 }
 
-.user-image,
-.user-info {
-  display: flex;
-  margin: 0;
-}
-
+/* imagen de usuario */
 .user-image {
   width: 30%;
-  & img {
-    width: 80%;
-    height: 80%;
-    border-radius: 10%;
-    -webkit-border-radius: 10%;
-    -moz-border-radius: 10%;
-    -ms-border-radius: 10%;
-    -o-border-radius: 10%;
-  }
-  & p {
-    text-align: start;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.user-image img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  border-radius: 10%;
+  -webkit-border-radius: 10%;
+  -moz-border-radius: 10%;
+  -ms-border-radius: 10%;
+  -o-border-radius: 10%;
+}
+
+/* info usuario */
 .user-info {
+  width: 70%;
+  display: flex;
   flex-direction: column;
-  justify-content: start;
-  & p {
-    text-align: start;
-  }
+  justify-content: flex-start;
 }
 
+.user-info p {
+  text-align: start;
+  margin: 0.25rem 0;
+}
+
+/* vehiculos */
 .user-cars {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 1rem;
 }
 
-table {
-  width: 80%;
+/* tabla responsiva: permitir scroll horizontal en pantallas pequeñas */
+.table-responsive-wapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  /* margin-top: 0.5rem; */
+}
+.table-responsive-wapper .table {
+  width: 100%;
   border-collapse: collapse;
-  margin: 20px 0;
+  margin: 10px 0;
+}
+
+/* mejorar apariencia de tabla en mobile */
+table th,
+table td {
+  padding: 0.5rem;
+  text-align: left;
+}
+
+/* media query para pantallas pequeñas */
+@media (max-width: 768px) {
+  .user {
+    flex-direction: column;
+    align-items: center;
+  }
+  .user-image {
+    width: 100%;
+  }
+  .user-info {
+    width: 100%;
+  }
+  .user-image img {
+    max-width: 160px;
+  }
+  .user-cars .table-responsive-wrapper table {
+    min-width: 520px;
+  }
+  .user-cars p,
+  .table {
+    font-size: 0.75rem;
+  }
 }

@@ -1,3 +1,4 @@
+import "../styles/vehicleDetail.css";
 import api from "../services/axios";
 import HeaderApp from "../components/HeaderApp";
 import { useNavigate } from "react-router-dom";
@@ -128,10 +129,10 @@ const VehicleDetail = () => {
     <>
       <HeaderApp />
       <div className="container">
-        <div className="row vehicle-detail">
-          <div className="col-12 text-start vehicle">
+        <div className="row vehicle-detail-wrapper">
+          <div className="col text-start vehicle-detail">
             <div>
-              <div className="vehicle-image" style={{ position: "relative" }}>
+              <div className="vehicle-image">
                 <h3 className="title-section text-center">
                   Datos del vehículo
                 </h3>

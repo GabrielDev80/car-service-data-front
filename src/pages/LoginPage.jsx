@@ -7,9 +7,9 @@ const LoginPage = () => {
     <>
       <HeaderApp />
       <div>
-        <p>Por favor, inicia sesión para continuar...</p>
+        <p className="mb-3">Por favor, inicia sesión para continuar...</p>
         <LoginForm />
-        <p>
+        <p className="mt-3">
           ¿Aún no tienes cuenta? <Link to="/register">Regístrate aquí.</Link>
         </p>
       </div>

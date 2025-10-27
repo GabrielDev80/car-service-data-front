@@ -4,6 +4,7 @@ import api from "../services/axios";
 import PasswordInput from "./PasswordInput";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { Button } from "./Button";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -87,7 +88,7 @@ const LoginForm = () => {
             <div className="input-group">
               <input
                 type="email"
-                className="form-control"
+                className="form-control mb-2"
                 id="email"
                 value={formData.email}
                 onChange={handleChange}
@@ -103,11 +104,12 @@ const LoginForm = () => {
                 })
               }
             />
-            <p>Ambos campos son obligatorios.</p>
-
-            <button type="submit" className="btn btn-primary">
-              Iniciar Sesión
-            </button>
+            <p className="my-3">Ambos campos son obligatorios.</p>
+            <Button
+              type="submit"
+              text="Iniciar Sesión"
+              className="btn-primary button"
+            />
           </form>
         </div>
       </div>

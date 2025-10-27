@@ -1,0 +1,27 @@
+/* 
+vehicle-detail
+vehicle
+vehicle-image
+title-section
+vehicle-image-container
+
+*/
+.vehicle-detail-wrapper {
+  width: 100%;
+  /* margin: ; */
+  display: flex;
+  flex-direction: column;
+}
+
+.vehicle-image {
+  position: relative;
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .vehicle-detail {
+  }
+}

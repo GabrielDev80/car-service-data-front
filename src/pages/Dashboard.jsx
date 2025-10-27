@@ -52,6 +52,7 @@ const Dashboard = () => {
       navigate("/");
     }
   };
+
   if (error) {
     return <p>Error: {error}</p>;
   }
@@ -65,7 +66,7 @@ const Dashboard = () => {
       <div className="container">
         <div className="row dashboard">
           <div className="col-12 text-center title">
-            <h1>Dashboard</h1>
+            <h1 className="dashboard-title">Dashboard</h1>
           </div>
           <h2 className="title-section">Usuario</h2>
           <div className="col-12 text-start user">
@@ -116,7 +117,7 @@ const Dashboard = () => {
                 <span>Ultima modificación:</span>
                 {formatDate(currentUser.updated_at)}
               </p>
-              <div className="d-flex flex-row gap-2">
+              <div className="dashboard-btn">
                 <Button
                   color="btn-primary"
                   onClick={handleUpdateUser}
@@ -133,7 +134,7 @@ const Dashboard = () => {
           <div className="user-cars">
             <h2 className="title-section">Mis Vehículos</h2>
             <Button
-              color="btn-outline-success"
+              color="btn-outline-success mb-2"
               onClick={() => navigate("/vehicleForm")}
               text={"Ingresar nuevo vehículo"}
             />
@@ -143,35 +144,37 @@ const Dashboard = () => {
                 mismo.
               </em>
             </p>
-            <table className="table table-striped table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th>Marca</th>
-                  <th>Modelo</th>
-                  <th>Año</th>
-                  <th>Color</th>
-                  <th>Patente</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentUser.vehicles.map((vehicle) => (
-                  <tr
-                    key={vehicle._id}
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      localStorage.setItem("vehicleId", vehicle._id);
-                      navigate(`/vehicleDetail/${vehicle._id}`);
-                    }}
-                  >
-                    <td>{vehicle.make}</td>
-                    <td>{vehicle.model}</td>
-                    <td>{vehicle.year}</td>
-                    <td>{vehicle.color}</td>
-                    <td>{vehicle.vehicle_registration}</td>
+            <div className="table-responsive-wapper">
+              <table className=" table-striped table-bordered table-hover table">
+                <thead>
+                  <tr>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Año</th>
+                    <th>Color</th>
+                    <th>Patente</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {currentUser.vehicles.map((vehicle) => (
+                    <tr
+                      key={vehicle._id}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        localStorage.setItem("vehicleId", vehicle._id);
+                        navigate(`/vehicleDetail/${vehicle._id}`);
+                      }}
+                    >
+                      <td>{vehicle.make}</td>
+                      <td>{vehicle.model}</td>
+                      <td>{vehicle.year}</td>
+                      <td>{vehicle.color}</td>
+                      <td>{vehicle.vehicle_registration}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

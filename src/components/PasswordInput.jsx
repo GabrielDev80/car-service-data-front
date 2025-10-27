@@ -1,3 +1,4 @@
+import "../styles/passwordInput.css";
 import { useState } from "react";
 
 const PasswordInput = ({ value, onChange }) => {
@@ -23,9 +24,10 @@ const PasswordInput = ({ value, onChange }) => {
         style={{ cursor: "pointer" }}
       >
         <img
+          className="input-image-eye"
           src={showPassword ? "/eye-slash-fill.svg" : "/eye-fill.svg"}
           alt="Toggle Password Visibility"
-          style={{ width: "30px", height: "30px" }}
+          // style={{ width: "30px", height: "30px" }}
         />
       </span>
     </div>
