@@ -22,7 +22,6 @@
 }
 
 body {
-  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,10 +29,19 @@ body {
   background-color: cyan;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
 .container {
   width: 100%;
   max-width: 1100px;
   padding: 0 1rem;
+  margin: 0 auto; /* <-- centrar el contenedor en la pantalla */
 }
 
 /* Enlaces, tipografias y botones */
