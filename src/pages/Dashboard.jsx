@@ -16,7 +16,7 @@ const Dashboard = () => {
         const userId = localStorage.getItem("userId");
         if (!userId) {
           throw new Error(
-            "No se encontro el id del usuario en el localStorage"
+            "No se encontro el id del usuario en el localStorage",
           );
         }
         const response = await api.get(`/users/${userId}`);
@@ -24,7 +24,7 @@ const Dashboard = () => {
         setCurrentUser(response.data.payload);
         localStorage.setItem(
           "currentUser",
-          JSON.stringify(response.data.payload)
+          JSON.stringify(response.data.payload),
         );
       } catch (err) {
         setError(err.message);
@@ -54,6 +54,7 @@ const Dashboard = () => {
   };
 
   if (error) {
+    console.log(" Error al cargar el usuario: ", error);
     return <p>Error: {error}</p>;
   }
 
@@ -63,7 +64,7 @@ const Dashboard = () => {
   // console.log("currentUser: ", currentUser);
   return (
     <>
-      <div className="container">
+      <div className="dashboard-container">
         <div className="row dashboard">
           <div className="col-12 text-center title">
             <h1 className="dashboard-title">Dashboard</h1>
@@ -128,13 +129,14 @@ const Dashboard = () => {
                   onClick={handleLogout}
                   text={"Cerrar sesión"}
                 />
+                {/* TODO: Ajustar CSS para el componente VehicleForm.jsx */}
               </div>
             </div>
           </div>
           <div className="user-cars">
             <h2 className="title-section">Mis Vehículos</h2>
             <Button
-              color="btn-outline-success mb-2"
+              color="btn-warning mb-2"
               onClick={() => navigate("/vehicleForm")}
               text={"Ingresar nuevo vehículo"}
             />
@@ -144,6 +146,7 @@ const Dashboard = () => {
                 mismo.
               </em>
             </p>
+            {/* TODO: Ajustar CSS para el componente VehicleDetail.jsx */}
             <div className="table-responsive-wapper">
               <table className=" table-striped table-bordered table-hover table">
                 <thead>

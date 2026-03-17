@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 import { formatDate } from "../utils/formatDate.utils";
+import { Button } from "../components/Button";
 
 const VehicleDetail = () => {
   const [currentVehicle, setCurrentVehicle] = useState(null);
@@ -129,283 +130,269 @@ const VehicleDetail = () => {
     <>
       <HeaderApp />
       <div className="container">
-        <div className="row vehicle-detail-wrapper">
-          <div className="col text-start vehicle-detail">
-            <div>
+        <div className="vehicle-detail-sections">
+          {/* Datos del vehículo */}
+          <div className="vehicle-detail">
+            <h3 className="title-section text-center">Datos del vehículo</h3>
+            <div className="vehicle-image-container">
               <div className="vehicle-image">
-                <h3 className="title-section text-center">
-                  Datos del vehículo
-                </h3>
-                <div
-                  className="vehicle-image-container"
-                  style={{ position: "relative", display: "inline-block" }}
+                <img
+                  src={
+                    Array.isArray(currentVehicle.thumbnails) &&
+                    currentVehicle.thumbnails.length > 0
+                      ? currentVehicle.thumbnails[mainImageIdx].startsWith(
+                          "data:"
+                        )
+                        ? currentVehicle.thumbnails[mainImageIdx]
+                        : `data:image/*;base64,${currentVehicle.thumbnails[mainImageIdx]}`
+                      : "/default-image.png"
+                  }
+                  alt="Imágen del vehículo"
+                />{" "}
+                {/* ícono para modificar imagen */}
+                <span
+                  className="vehicle-image-icon"
+                  onClick={handleIconCLick}
+                  title="Modificar imágen"
                 >
-                  <img
-                    src={
-                      Array.isArray(currentVehicle.thumbnails) &&
-                      currentVehicle.thumbnails.length > 0
-                        ? currentVehicle.thumbnails[mainImageIdx].startsWith(
-                            "data:"
-                          )
-                          ? currentVehicle.thumbnails[mainImageIdx]
-                          : `data:image/*;base64,${currentVehicle.thumbnails[mainImageIdx]}`
-                        : "/default-image.png"
-                    }
-                    alt="Imágen del vehículo"
-                    style={{ maxWidth: "300px", maxHeight: "200px" }}
-                  />{" "}
-                  {/* ícono para modificar imagen */}
-                  <span
-                    className="vehicle-image-icon"
-                    style={{
-                      position: "absolute",
-                      top: 10,
-                      right: 10,
-                      cursor: "pointer",
-                      background: "#fff",
-                      borderRadius: "50%",
-                      padding: 6,
-                      boxShadow: "0 1px 4px rgba(0,0,0,0.2)",
-                    }}
-                    onClick={handleIconCLick}
-                    title="Modificar imágen"
-                  >
-                    <img src="/pencil.svg" alt="ícono de editar" />
-                  </span>
-                  {/* input oculto para modificar imagen */}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    ref={fileInputRef}
-                    style={{ display: "none" }}
-                    onChange={handleImageChange}
-                    multiple
+                  <img src="/pencil.svg" alt="ícono de editar" />
+                </span>
+                {/* input oculto para modificar imagen */}
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={fileInputRef}
+                  style={{ display: "none" }}
+                  onChange={handleImageChange}
+                  multiple
+                />
+              </div>
+              {selectedImages && selectedImages.length > 0 && (
+                <div style={{ marginTop: 10 }}>
+                  <span>Imágen/es seleccionada/s:</span>
+                  <ul style={{ listStyle: "none", paddingLeft: 0 }}>
+                    {selectedImages.map((img, idx) => (
+                      <li
+                        key={idx}
+                        style={{ display: "inline-block", marginRight: 10 }}
+                      >
+                        <img
+                          src={URL.createObjectURL(img)}
+                          alt={img.name}
+                          style={{
+                            maxWidth: 80,
+                            maxHeight: 80,
+                            display: "block",
+                            marginBottom: 4,
+                          }}
+                        />
+                        <span style={{ fontSize: 12 }}>{img.name}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  {/* Boton para subir la imagen */}
+                  <Button
+                    className="btn-sm"
+                    color="btn-primary"
+                    onClick={handleImageUpload}
+                    style={{ marginLeft: 10 }}
+                    text={"Guardar imágen"}
                   />
                 </div>
-                {selectedImages && selectedImages.length > 0 && (
-                  <div style={{ marginTop: 10 }}>
-                    <span>Imágen/es seleccionada/s:</span>
-                    <ul style={{ listStyle: "none", paddingLeft: 0 }}>
-                      {selectedImages.map((img, idx) => (
-                        <li
-                          key={idx}
-                          style={{ display: "inline-block", marginRight: 10 }}
-                        >
-                          <img
-                            src={URL.createObjectURL(img)}
-                            alt={img.name}
-                            style={{
-                              maxWidth: 80,
-                              maxHeight: 80,
-                              display: "block",
-                              marginBottom: 4,
-                            }}
-                          />
-                          <span style={{ fontSize: 12 }}>{img.name}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    {/* Boton para subir la imagen */}
-                    <button
-                      className="btn btn-primary btn-sm"
-                      style={{ marginLeft: 10 }}
-                      onClick={handleImageUpload}
-                      type="button"
-                    >
-                      Guardar imágen
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              <div className="vehicle-info">
-                <form onSubmit={handleEditSubmit}>
-                  <p>
-                    <span>Vehicle Id:</span>
-                    {currentVehicle._id}
-                  </p>
-                  <div>
-                    <span>Imágenes:</span>
-                    {currentVehicle.thumbnails?.length > 0 ? (
-                      <div>
-                        <ul style={{ listStyle: "none", paddingLeft: 0 }}>
-                          {currentVehicle.thumbnails.map((img, idx) => (
-                            <li
-                              key={idx}
-                              style={{
-                                display: "inline-block",
-                                marginRight: 10,
-                                border:
-                                  idx === mainImageIdx
-                                    ? "2px solid #007bff"
-                                    : "2px solid transparent",
-                                borderRadius: 4,
-                                cursor: "pointer",
-                              }}
-                              onClick={() => setMainImageIdx(idx)}
-                              title="Seleccionar como principal"
-                            >
-                              <img
-                                src={
-                                  img.startsWith("data:")
-                                    ? img
-                                    : `data:image/*;base64,${img}`
-                                }
-                                alt={`Miniatura ${idx + 1}`}
-                                style={{
-                                  maxWidth: "100px",
-                                  maxHeight: "100px",
-                                  display: "block",
-                                }}
-                              />
-                            </li>
-                          ))}
-                        </ul>
-                        <span style={{ fontSize: 14, color: "#007bff" }}>
-                          Hacé clic en una imagen para mostrarla como principal
-                        </span>
-                      </div>
-                    ) : (
-                      <p>No hay imágenes disponibles</p>
-                    )}{" "}
-                  </div>
-                  <p>
-                    <span>Marca:</span>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        name="make"
-                        value={editData.make}
-                        onChange={handleInputChange}
-                        className="form-control"
-                        style={{
-                          display: "inline-block",
-                          width: "auto",
-                          marginLeft: 8,
-                        }}
-                      />
-                    ) : (
-                      currentVehicle.make
-                    )}
-                  </p>
-                  <p>
-                    <span>Modelo:</span>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        name="model"
-                        value={editData.model}
-                        onChange={handleInputChange}
-                        className="form-control"
-                        style={{
-                          display: "inline-block",
-                          width: "auto",
-                          marginLeft: 8,
-                        }}
-                      />
-                    ) : (
-                      currentVehicle.model
-                    )}
-                  </p>
-                  <p>
-                    <span>Año:</span>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        name="year"
-                        value={editData.year}
-                        onChange={handleInputChange}
-                        className="form-control"
-                        style={{
-                          display: "inline-block",
-                          width: "auto",
-                          marginLeft: 8,
-                        }}
-                      />
-                    ) : (
-                      currentVehicle.year
-                    )}
-                  </p>
-                  <p>
-                    <span>Color:</span>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        name="color"
-                        value={editData.color}
-                        onChange={handleInputChange}
-                        className="form-control"
-                        style={{
-                          display: "inline-block",
-                          width: "auto",
-                          marginLeft: 8,
-                        }}
-                      />
-                    ) : (
-                      currentVehicle.color
-                    )}
-                  </p>
-                  <p>
-                    <span>Patente:</span>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        name="vehicle_registration"
-                        value={editData.vehicle_registration}
-                        onChange={handleInputChange}
-                        className="form-control"
-                        style={{
-                          display: "inline-block",
-                          width: "auto",
-                          marginLeft: 8,
-                        }}
-                      />
-                    ) : (
-                      currentVehicle.vehicle_registration
-                    )}
-                  </p>
-                  <p>
-                    <span>Fecha de creación:</span>
-                    {formatDate(currentVehicle.createdAt)}
-                  </p>
-                  <p>
-                    <span>Última modificación:</span>
-                    {formatDate(currentVehicle.updatedAt)}
-                  </p>
-                  {isEditing && (
-                    <button className="btn btn-outline-primary" type="submit">
-                      Guardar cambios
-                    </button>
-                  )}
-                </form>
-                {!isEditing && (
-                  <button
-                    className="btn btn-outline-success"
-                    type="button"
-                    onClick={() =>
-                      handleEditClick("vehicle", {
-                        make: currentVehicle.make,
-                        model: currentVehicle.model,
-                        year: currentVehicle.year,
-                        color: currentVehicle.color,
-                        vehicle_registration:
-                          currentVehicle.vehicle_registration,
-                      })
-                    }
-                  >
-                    Modificar datos
-                  </button>
-                )}
-                <button
-                  className="btn btn-outline-primary ms-3"
-                  type="button"
-                  onClick={() => navigate("/dashboard")}
-                >
-                  Dashboard
-                </button>
-              </div>
+              )}
             </div>
-            <h3 className="title-section">Documentación</h3>
+            {/* Información básica del vehículo */}
+            <div className="vehicle-info">
+              <form onSubmit={handleEditSubmit}>
+                <p>
+                  <span>Vehicle Id:</span>
+                  {currentVehicle._id}
+                </p>
+                <div>
+                  <span>Imágenes:</span>
+                  {currentVehicle.thumbnails?.length > 0 ? (
+                    <div>
+                      <ul>
+                        {currentVehicle.thumbnails.map((img, idx) => (
+                          <li
+                            key={idx}
+                            style={{
+                              display: "inline-block",
+                              marginRight: 10,
+                              border:
+                                idx === mainImageIdx
+                                  ? "2px solid #007bff"
+                                  : "2px solid transparent",
+                              borderRadius: 4,
+                              cursor: "pointer",
+                            }}
+                            onClick={() => setMainImageIdx(idx)}
+                            title="Seleccionar como principal"
+                          >
+                            <img
+                              src={
+                                img.startsWith("data:")
+                                  ? img
+                                  : `data:image/*;base64,${img}`
+                              }
+                              alt={`Miniatura ${idx + 1}`}
+                              style={{
+                                maxWidth: "100px",
+                                maxHeight: "100px",
+                                display: "block",
+                              }}
+                            />
+                          </li>
+                        ))}
+                      </ul>
+                      <span className="span">
+                        Hacé clic en una imagen para mostrarla como principal
+                      </span>
+                    </div>
+                  ) : (
+                    <p>No hay imágenes disponibles</p>
+                  )}{" "}
+                </div>
+                <p>
+                  <span>Marca:</span>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="make"
+                      value={editData.make}
+                      onChange={handleInputChange}
+                      className="form-control"
+                      style={{
+                        display: "inline-block",
+                        width: "auto",
+                        marginLeft: 8,
+                      }}
+                    />
+                  ) : (
+                    currentVehicle.make
+                  )}
+                </p>
+                <p>
+                  <span>Modelo:</span>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="model"
+                      value={editData.model}
+                      onChange={handleInputChange}
+                      className="form-control"
+                      style={{
+                        display: "inline-block",
+                        width: "auto",
+                        marginLeft: 8,
+                      }}
+                    />
+                  ) : (
+                    currentVehicle.model
+                  )}
+                </p>
+                <p>
+                  <span>Año:</span>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="year"
+                      value={editData.year}
+                      onChange={handleInputChange}
+                      className="form-control"
+                      style={{
+                        display: "inline-block",
+                        width: "auto",
+                        marginLeft: 8,
+                      }}
+                    />
+                  ) : (
+                    currentVehicle.year
+                  )}
+                </p>
+                <p>
+                  <span>Color:</span>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="color"
+                      value={editData.color}
+                      onChange={handleInputChange}
+                      className="form-control"
+                      style={{
+                        display: "inline-block",
+                        width: "auto",
+                        marginLeft: 8,
+                      }}
+                    />
+                  ) : (
+                    currentVehicle.color
+                  )}
+                </p>
+                <p>
+                  <span>Patente:</span>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="vehicle_registration"
+                      value={editData.vehicle_registration}
+                      onChange={handleInputChange}
+                      className="form-control"
+                      style={{
+                        display: "inline-block",
+                        width: "auto",
+                        marginLeft: 8,
+                      }}
+                    />
+                  ) : (
+                    currentVehicle.vehicle_registration
+                  )}
+                </p>
+                <p>
+                  <span>Fecha de creación:</span>
+                  {formatDate(currentVehicle.createdAt)}
+                </p>
+                <p>
+                  <span>Última modificación:</span>
+                  {formatDate(currentVehicle.updatedAt)}
+                </p>
+                {isEditing && (
+                  <Button
+                    color="btn-outline-primary"
+                    type="submit"
+                    text={"Guardar cambios"}
+                  />
+                )}
+              </form>
+              {!isEditing && (
+                <button
+                  className="btn btn-outline-success"
+                  type="button"
+                  onClick={() =>
+                    handleEditClick("vehicle", {
+                      make: currentVehicle.make,
+                      model: currentVehicle.model,
+                      year: currentVehicle.year,
+                      color: currentVehicle.color,
+                      vehicle_registration: currentVehicle.vehicle_registration,
+                    })
+                  }
+                >
+                  Modificar datos
+                </button>
+              )}
+              <button
+                className="btn btn-outline-primary ms-3"
+                type="button"
+                onClick={() => navigate("/dashboard")}
+              >
+                Dashboard
+              </button>
+            </div>
+          </div>
+          {/* Documentación del vehículo */}
+          <h3 className="title-section">Documentación</h3>
+          <div className="vehicle-documentation">
             {/* ********************************************************* */}
             <p style={{ color: "red" }}>
               <strong>
@@ -421,36 +408,35 @@ const VehicleDetail = () => {
                 mismo.
               </em>
             </p>
-            <div className="vehicle-documentation">
-              <table className="table table-striped table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <th>TIPO</th>
-                    <th>DETALLE</th>
-                    <th>VENCIMIENTO</th>
+            <table className="table table-striped table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>TIPO</th>
+                  <th>DETALLE</th>
+                  <th>VENCIMIENTO</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentVehicle.documentation.map((document) => (
+                  <tr
+                    key={document._id}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      localStorage.setItem(
+                        "docToEdit",
+                        JSON.stringify(document)
+                      );
+                      navigate("/vehicleDocsForm");
+                    }}
+                  >
+                    <td>{document.document_name}</td>
+                    <td>{document.description}</td>
+                    <td>{formatDate(document.expiration_date)}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {currentVehicle.documentation.map((document) => (
-                    <tr
-                      key={document._id}
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        localStorage.setItem(
-                          "docToEdit",
-                          JSON.stringify(document)
-                        );
-                        navigate("/vehicleDocsForm");
-                      }}
-                    >
-                      <td>{document.document_name}</td>
-                      <td>{document.description}</td>
-                      <td>{formatDate(document.expiration_date)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              {/*=========================================
+                ))}
+              </tbody>
+            </table>
+            {/*=========================================
               * Crear una tabla conlos siguientes campos:
                 TIPO || DETALLE  || VENCIMIENTO
               - "licencia_nacional",
@@ -462,63 +448,63 @@ const VehicleDetail = () => {
               - "ruta",
               - "otro"
               ============================================*/}
-              <button
-                className="btn btn-outline-success"
-                type="button"
-                onClick={() => navigate("/vehicleDocsForm")}
-              >
-                Agregar Documentación
-              </button>
-            </div>
-            <h3 className="title-section">Servicios y Mantenimientos</h3>
-            <div className="vehicle-services">
-              <table className="table table-striped table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <th>Fecha</th>
-                    <th>Tipo</th>
-                    <th>Detalle</th>
-                    <th>Kilometraje</th>
-                    <th>Costo</th>
-                    <th>Lugar</th>
-                    <th>Km prox. serv.</th>
-                    <th>Fecha prox. serv.</th>
+            <button
+              className="btn btn-outline-success"
+              type="button"
+              onClick={() => navigate("/vehicleDocsForm")}
+            >
+              Agregar Documentación
+            </button>
+          </div>
+          {/* Servicios y mantenimientos del vehículo */}
+          <h3 className="title-section">Servicios y Mantenimientos</h3>
+          <div className="vehicle-services">
+            <table className="table table-striped table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Tipo</th>
+                  <th>Detalle</th>
+                  <th>Kilometraje</th>
+                  <th>Costo</th>
+                  <th>Lugar</th>
+                  <th>Km prox. serv.</th>
+                  <th>Fecha prox. serv.</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentVehicle.services.map((service) => (
+                  <tr
+                    key={service._id}
+                    style={{ cursor: "pointer" }}
+                    // onClick={navigate("/ducumentUpdate")}
+                  >
+                    <td>{service.service_date}</td>
+                    <td>{service.service_type}</td>
+                    <td>{service.service_description}</td>
+                    <td>{service.service_mileage}</td>
+                    <td>{service.service_cost}</td>
+                    <td>{service.service_location}</td>
+                    <td>{service.next_service_mileage}</td>
+                    <td>{service.next_service_date}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {currentVehicle.services.map((service) => (
-                    <tr
-                      key={service._id}
-                      style={{ cursor: "pointer" }}
-                      // onClick={navigate("/ducumentUpdate")}
-                    >
-                      <td>{service.service_date}</td>
-                      <td>{service.service_type}</td>
-                      <td>{service.service_description}</td>
-                      <td>{service.service_mileage}</td>
-                      <td>{service.service_cost}</td>
-                      <td>{service.service_location}</td>
-                      <td>{service.next_service_mileage}</td>
-                      <td>{service.next_service_date}</td>
-                    </tr>
-                  ))}
-                </tbody>
-                {/*=========================================
+                ))}
+              </tbody>
+              {/*=========================================
               - Cambios de aceite
               - Reparaciones
               - Bateria
               - Cubiertas
               - Etc
               ============================================*/}
-              </table>
-              <button
-                className="btn btn-outline-success"
-                type="button"
-                onClick={() => navigate("/newService")}
-              >
-                Agregar Mantenimiento
-              </button>
-            </div>
+            </table>
+            <button
+              className="btn btn-outline-success"
+              type="button"
+              onClick={() => navigate("/newService")}
+            >
+              Agregar Mantenimiento
+            </button>
           </div>
         </div>
       </div>
