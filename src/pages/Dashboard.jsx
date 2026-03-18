@@ -40,7 +40,7 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     try {
-      await api.post("/logout");
+      await api.post("/users/logout");
     } catch (err) {
       console.error("Error al cerrar sesión en el servidor:", err);
     } finally {
@@ -110,6 +110,24 @@ const Dashboard = () => {
                 <span>Teléfono:</span>
                 {currentUser.phone}
               </p>
+              <div className="license">
+                <span style={{ color: "red" }}>
+                  *** Crear estos datos en el backend para que se muestren en el
+                  dashboard ***
+                </span>
+                <h5>Licencia de conducir</h5>
+                <p>
+                  <span>Clase:</span>
+                  {currentUser.licenseClass || "No especificada "}
+                </p>
+                <p>
+                  <span>Vencimiento:</span>
+                  {currentUser.expireDate
+                    ? formatDate(currentUser.expireDate)
+                    : "No especificado"}
+                </p>
+              </div>
+
               <p>
                 <span>Fecha de creación:</span>
                 {formatDate(currentUser.created_at)}
