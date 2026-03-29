@@ -111,10 +111,10 @@ const Dashboard = () => {
                 {currentUser.phone}
               </p>
               <div className="license">
-                <span style={{ color: "red" }}>
+                {/* <span style={{ color: "red" }}>
                   *** Crear estos datos en el backend para que se muestren en el
                   dashboard ***
-                </span>
+                </span> */}
                 <h5>Licencia de conducir</h5>
                 <p>
                   <span>Clase:</span>

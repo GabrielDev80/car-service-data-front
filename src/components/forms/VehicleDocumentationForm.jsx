@@ -67,7 +67,7 @@ const VehicleDocumentationForm = () => {
         updatedDocs = currentDocs.map((doc) =>
           doc._id === editingDoc._id
             ? { ...doc, ...formDataToSave, _id: doc._id }
-            : doc
+            : doc,
         );
       } else {
         updatedDocs = [
@@ -99,7 +99,7 @@ const VehicleDocumentationForm = () => {
       });
       navigate(`/vehicleDetail/${vehicleId}`);
     } catch (err) {
-      Swal.fire("Error", "No se pudo guardar la documentación.", "error");
+      Swal.fire("Error", "No se pudo guardar la documentación.", err);
     }
   };
   return (

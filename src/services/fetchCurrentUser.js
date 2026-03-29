@@ -7,7 +7,7 @@ export const fetchCurrentUser = async () => {
       throw new Error("No se encontro el id del usuario en el localStorage");
     }
     const response = await api.get(`/users/${userId}`);
-    // console.log("Data: ", response);
+    console.log("fetchCurrentUser - Data: ", response.data.payload);
     return response.data.payload;
   } catch (err) {
     console.log("fetchCurrentUser: ", err.message);
