@@ -113,7 +113,8 @@ vehicle-image-container
   min-width: 520px;
   overflow-x: auto;
 }
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .vehicle-detail {
   }
 }
+ */

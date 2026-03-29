@@ -54,6 +54,16 @@ h2.title-section {
   margin-top: 0.5rem;
 }
 
+.license {
+  margin: 0.5rem 0 0.5rem 0;
+  & h5 {
+    text-decoration: solid underline;
+  }
+  & p {
+    display: block;
+  }
+}
+
 /* imagen de usuario */
 .user-image {
   width: 30%;
