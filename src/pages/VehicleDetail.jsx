@@ -4,13 +4,18 @@ import HeaderApp from "../components/HeaderApp";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
-import { formatDate } from "../utils/formatDate.utils";
+import {
+  formatDate,
+  formatCurrency,
+  capitalizeFirstLetter,
+} from "../utils/formatDate.utils";
 import { Button } from "../components/Button";
 
 const VehicleDetail = () => {
   const [currentVehicle, setCurrentVehicle] = useState(null);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [editSection, setEditSection] = useState(null); // 'vehicle', 'documentation', 'service'
   const [editData, setEditData] = useState({});
   const [selectedImages, setSelectedImages] = useState([]);
@@ -25,7 +30,7 @@ const VehicleDetail = () => {
         const vehicleId = localStorage.getItem("vehicleId");
         if (!vehicleId) {
           throw new Error(
-            "No se encontro el id del vehículo en el localStorage"
+            "No se encontro el id del vehículo en el localStorage",
           );
         }
         const response = await api.get(`/vehicles/${vehicleId}`);
@@ -141,7 +146,7 @@ const VehicleDetail = () => {
                     Array.isArray(currentVehicle.thumbnails) &&
                     currentVehicle.thumbnails.length > 0
                       ? currentVehicle.thumbnails[mainImageIdx].startsWith(
-                          "data:"
+                          "data:",
                         )
                         ? currentVehicle.thumbnails[mainImageIdx]
                         : `data:image/*;base64,${currentVehicle.thumbnails[mainImageIdx]}`
@@ -424,12 +429,12 @@ const VehicleDetail = () => {
                     onClick={() => {
                       localStorage.setItem(
                         "docToEdit",
-                        JSON.stringify(document)
+                        JSON.stringify(document),
                       );
                       navigate("/vehicleDocsForm");
                     }}
                   >
-                    <td>{document.document_name}</td>
+                    <td>{capitalizeFirstLetter(document.document_name)}</td>
                     <td>{document.description}</td>
                     <td>{formatDate(document.expiration_date)}</td>
                   </tr>
@@ -459,6 +464,12 @@ const VehicleDetail = () => {
           {/* Servicios y mantenimientos del vehículo */}
           <h3 className="title-section">Servicios y Mantenimientos</h3>
           <div className="vehicle-services">
+            <p>
+              <em>
+                Para modificar un servicio en particular haga clic sobre el
+                mismo.
+              </em>
+            </p>
             <table className="table table-striped table-bordered table-hover">
               <thead>
                 <tr>
@@ -477,16 +488,22 @@ const VehicleDetail = () => {
                   <tr
                     key={service._id}
                     style={{ cursor: "pointer" }}
-                    // onClick={navigate("/ducumentUpdate")}
+                    onClick={() => {
+                      localStorage.setItem(
+                        "serviceToEdit",
+                        JSON.stringify(service),
+                      );
+                      navigate("/newService");
+                    }}
                   >
-                    <td>{service.service_date}</td>
-                    <td>{service.service_type}</td>
+                    <td>{formatDate(service.service_date)}</td>
+                    <td>{capitalizeFirstLetter(service.service_type)}</td>
                     <td>{service.service_description}</td>
                     <td>{service.service_mileage}</td>
-                    <td>{service.service_cost}</td>
+                    <td>{formatCurrency(service.service_cost)}</td>
                     <td>{service.service_location}</td>
                     <td>{service.next_service_mileage}</td>
-                    <td>{service.next_service_date}</td>
+                    <td>{formatDate(service.next_service_date)}</td>
                   </tr>
                 ))}
               </tbody>

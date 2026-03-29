@@ -2,9 +2,12 @@ import api from "../services/axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { formatDateDDMMYYYY } from "../utils/formatDate.utils";
 
 const UpdateUser = () => {
   const [currentUser, setCurrentUser] = useState(null);
+  const [thumbnailFile, setThumbnailFile] = useState(null);
+  const [thumbnailPreview, setThumbnailPreview] = useState(null);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
@@ -17,12 +20,13 @@ const UpdateUser = () => {
 
         if (!userId) {
           throw new Error(
-            "No se encontro el id del usuario en el localStorage"
+            "No se encontro el id del usuario en el localStorage",
           );
         }
         const response = await api.get(`/users/${userId}`);
         // console.log("Data: ", response);
         setCurrentUser(response.data.payload);
+        setThumbnailPreview(response.data.payload.thumbnail || null);
       } catch (err) {
         setError(err.message);
       }
@@ -48,12 +52,10 @@ const UpdateUser = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      setThumbnailFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setCurrentUser((prev) => ({
-          ...prev,
-          thumbnail: reader.result,
-        }));
+        setThumbnailPreview(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -67,8 +69,30 @@ const UpdateUser = () => {
         throw new Error("No se encontro el id del usuario en el localStorage");
       }
 
+      // Construir FormData para soportar archivos (thumbnail)
+      const formData = new FormData();
+      formData.append("first_name", currentUser.first_name ?? "");
+      formData.append("last_name", currentUser.last_name ?? "");
+      formData.append("username", currentUser.username ?? "");
+      formData.append("phone", currentUser.phone ?? "");
+      formData.append("email", currentUser.email ?? "");
+
+      // Mapear licencia a un objeto anidado para que mongoose pueda actualizarlo
+      if (currentUser.licenseClass) {
+        formData.append("license.licenseClass", currentUser.licenseClass);
+      }
+      if (currentUser.expireDate) {
+        formData.append("license.expireDate", currentUser.expireDate);
+      }
+
+      if (thumbnailFile) {
+        formData.append("thumbnail", thumbnailFile);
+      }
+
       // Realizar la solicitud PATCH al backend
-      const response = await api.patch(`/users/${userId}`, currentUser);
+      const response = await api.patch(`/users/${userId}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       // Manejar la respuesta del backend
       if (response.status === 200) {
@@ -80,6 +104,12 @@ const UpdateUser = () => {
           showConfirmButton: false,
           timer: 2500,
         });
+
+        setCurrentUser(response.data.payload);
+        setThumbnailPreview(
+          response.data.payload.thumbnail || thumbnailPreview,
+        );
+        setThumbnailFile(null);
         setIsEditing(false); // Salir del modo edición
       } else {
         throw new Error("Error al actualizar los datos del usuario");
@@ -97,12 +127,19 @@ const UpdateUser = () => {
     return <p>Cargando datos del usuario...</p>;
   }
 
+  const expireDateValue = currentUser.expireDate
+    ? currentUser.expireDate.split("T")[0]
+    : "";
+
+  const thumbnailSrc = thumbnailPreview || currentUser.thumbnail || "";
+
   // console.log("Imagen: ", currentUser.thumbnail);
 
   return (
     <>
       <h1>Datos del Usuario</h1>
       {isEditing ? (
+        /* Modo edición */
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -117,12 +154,12 @@ const UpdateUser = () => {
               accept="image/*"
               onChange={handleImageChange}
             />
-            {currentUser.thumbnail && (
+            {thumbnailSrc && (
               <img
                 src={
-                  currentUser.thumbnail.startsWith("data:")
-                    ? currentUser.thumbnail
-                    : `data:image/jpeg;base64,${currentUser.thumbnail}`
+                  thumbnailSrc.startsWith("data:")
+                    ? thumbnailSrc
+                    : `data:image/jpeg;base64,${thumbnailSrc}`
                 }
                 alt="Previsualización de la imagen"
                 style={{ width: "50px", height: "50px" }}
@@ -136,7 +173,7 @@ const UpdateUser = () => {
               className="form-control"
               id="first_name"
               name="first_name"
-              value={currentUser.first_name}
+              value={currentUser.first_name ?? ""}
               onChange={handleInputChange}
             />
           </div>
@@ -147,7 +184,7 @@ const UpdateUser = () => {
               className="form-control"
               id="last_name"
               name="last_name"
-              value={currentUser.last_name}
+              value={currentUser.last_name ?? ""}
               onChange={handleInputChange}
             />
           </div>
@@ -158,7 +195,7 @@ const UpdateUser = () => {
               className="form-control"
               id="username"
               name="username"
-              value={currentUser.username}
+              value={currentUser.username ?? ""}
               onChange={handleInputChange}
             />
           </div>
@@ -169,7 +206,7 @@ const UpdateUser = () => {
               className="form-control"
               id="phone"
               name="phone"
-              value={currentUser.phone}
+              value={currentUser.phone ?? ""}
               onChange={handleInputChange}
             />
           </div>
@@ -180,7 +217,28 @@ const UpdateUser = () => {
               className="form-control"
               id="email"
               name="email"
-              value={currentUser.email}
+              value={currentUser.email ?? ""}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <h5>Licencia de conducir</h5>
+            <label htmlFor="licenseClass">Clase:</label>
+            <input
+              type="text"
+              className="form-control"
+              id="licenseClass"
+              name="licenseClass"
+              value={currentUser.licenseClass ?? ""}
+              onChange={handleInputChange}
+            />
+            <label htmlFor="expireDate">Vencimiento:</label>
+            <input
+              type="date"
+              className="form-control"
+              id="expireDate"
+              name="expireDate"
+              value={expireDateValue}
               onChange={handleInputChange}
             />
           </div>
@@ -196,6 +254,7 @@ const UpdateUser = () => {
           </button>
         </form>
       ) : (
+        /* Modo visualización */
         <>
           <div>
             <img
@@ -229,6 +288,19 @@ const UpdateUser = () => {
               <span>Email:</span>
               {currentUser.email}
             </p>
+            <div className="license">
+              <h5>Licencia de conducir</h5>
+              <p>
+                <span>Clase:</span>
+                {currentUser.licenseClass || "No especificada "}
+              </p>
+              <p>
+                <span>Vencimiento:</span>
+                {currentUser.expireDate
+                  ? formatDateDDMMYYYY(currentUser.expireDate)
+                  : "No especificado"}
+              </p>
+            </div>
           </div>
           <button
             className="btn btn-outline-primary btn-lg"
