@@ -6,6 +6,7 @@ import UpdateUser from "./pages/UpdateUser";
 import VehicleDetail from "./pages/VehicleDetail";
 import VehicleForm from "./components/forms/VehicleForm";
 import VehicleDocumentationForm from "./components/forms/VehicleDocumentationForm";
+import VehicleServiceForm from "./components/forms/VehicleServiceForm";
 const App = () => {
   return (
     <BrowserRouter>
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/vehicleForm" element={<VehicleForm />} />
         <Route path="/vehicleDetail/:id" element={<VehicleDetail />} />
         <Route path="/vehicleDocsForm" element={<VehicleDocumentationForm />} />
+        <Route path="/newService" element={<VehicleServiceForm />} />
       </Routes>
     </BrowserRouter>
   );
