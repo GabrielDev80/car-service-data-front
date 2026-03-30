@@ -12,6 +12,14 @@ export const formatDate = (dateString) => {
   return new Intl.DateTimeFormat("es-ES", options).format(date);
 };
 
+const now = new Date();
+export const timeString = now.toLocaleTimeString("es-ES", {
+  hour: "2-digit",
+  minute: "2-digit",
+  // second: "2-digit",
+  hour12: false,
+});
+
 export const formatCurrency = (value) => {
   if (value === null || value === undefined || value === "") return "-";
   const number = Number(value);
