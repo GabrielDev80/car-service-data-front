@@ -1,47 +1,46 @@
-/* Layout principal */
-.dashboard-container {
+.updateUser-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.dashboard {
+.updateUser {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
   min-height: 100vh;
   width: 100%;
   max-width: 1100px;
 }
 
+form {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputs {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-buttons {
+  position: relative;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem 0 1rem 0;
+}
 /* Títulos y labels */
-.dashboard-title {
+.updateUser-title {
   font-weight: bold;
   color: #222;
   margin: 1rem 0;
-}
-
-span {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #333;
-  margin-right: 0.5rem;
-}
-
-.dashboard-btn {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 1rem;
-}
-
-/* secciones */
-h2.title-section {
-  width: 100%;
-  margin: 0 0 0.5rem 0;
-  text-align: start;
 }
 
 /* usuario: imagen + datos */
@@ -53,7 +52,6 @@ h2.title-section {
   width: 100%;
   margin-top: 0.5rem;
 }
-
 .license {
   margin: 0.5rem 0 0.5rem 0;
   & h5 {
@@ -63,19 +61,6 @@ h2.title-section {
     display: block;
     padding-left: 1rem;
   }
-  & .licence-warning {
-    display: flex;
-    color: red;
-    font-weight: bold;
-    flex-direction: column;
-    align-items: center;
-    & .warn {
-      font-size: 2rem;
-    }
-    & .warn2 {
-      font-size: 1.5rem;
-    }
-  }
 }
 
 /* imagen de usuario */
@@ -83,7 +68,7 @@ h2.title-section {
   width: 30%;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .user-image img {
@@ -110,33 +95,13 @@ h2.title-section {
   margin: 0.25rem 0;
 }
 
-/* vehiculos */
-.user-cars {
+.buttons {
+  position: relative;
+  width: 75%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
+  gap: 1rem;
   margin-top: 1rem;
-}
-
-/* tabla responsiva: permitir scroll horizontal en pantallas pequeñas */
-.table-responsive-wapper {
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  /* margin-top: 0.5rem; */
-}
-.table-responsive-wapper .table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 10px 0;
-}
-
-/* mejorar apariencia de tabla en mobile */
-table th,
-table td {
-  padding: 0.5rem;
-  text-align: left;
 }
 
 /* media query para pantallas pequeñas */
@@ -153,12 +118,5 @@ table td {
   }
   .user-image img {
     max-width: 160px;
-  }
-  .user-cars .table-responsive-wrapper table {
-    min-width: 520px;
-  }
-  .user-cars p,
-  .table {
-    font-size: 0.75rem;
   }
 }

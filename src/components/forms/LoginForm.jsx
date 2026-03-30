@@ -5,6 +5,7 @@ import PasswordInput from "../PasswordInput";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../Button";
+import { timeString } from "../../utils/formats.utils";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -42,9 +43,11 @@ const LoginForm = () => {
     try {
       const response = await api.post("sessions/login", formData);
       console.log("Inicio de sesión exitoso: ", response.data);
+      console.log("TOKEN activado a la hora: ", timeString);
       // Guardar el token en el local storage
       localStorage.setItem("token", response.data.payload.token);
       localStorage.setItem("userId", response.data.payload.user.user_id);
+      localStorage.setItem("activate", timeString);
 
       Swal.fire({
         position: "top-end",

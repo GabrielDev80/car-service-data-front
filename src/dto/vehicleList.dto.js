@@ -1,1 +1,0 @@
-const vehicleListDto = (vehicle) => {};

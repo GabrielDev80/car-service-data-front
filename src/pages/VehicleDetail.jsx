@@ -1,14 +1,14 @@
 import "../styles/vehicleDetail.css";
 import api from "../services/axios";
 import HeaderApp from "../components/HeaderApp";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 import {
   formatDate,
   formatCurrency,
   capitalizeFirstLetter,
-} from "../utils/formatDate.utils";
+} from "../utils/formats.utils";
 import { Button } from "../components/Button";
 
 const VehicleDetail = () => {
@@ -22,16 +22,14 @@ const VehicleDetail = () => {
   const [mainImageIdx, setMainImageIdx] = useState(0);
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
+  const { id: vehicleId } = useParams();
 
   // Traer el vehículo correspondiente al id guardado en el localStorage
   useEffect(() => {
     const fetchVehicle = async () => {
       try {
-        const vehicleId = localStorage.getItem("vehicleId");
         if (!vehicleId) {
-          throw new Error(
-            "No se encontro el id del vehículo en el localStorage",
-          );
+          throw new Error("No se encontro el id del vehículo en la URL");
         }
         const response = await api.get(`/vehicles/${vehicleId}`);
         // console.log("response: ", response);
@@ -41,7 +39,7 @@ const VehicleDetail = () => {
       }
     };
     fetchVehicle();
-  }, []);
+  }, [vehicleId]);
 
   // Manejo de errores
   if (error) {
@@ -398,15 +396,6 @@ const VehicleDetail = () => {
           {/* Documentación del vehículo */}
           <h3 className="title-section">Documentación</h3>
           <div className="vehicle-documentation">
-            {/* ********************************************************* */}
-            <p style={{ color: "red" }}>
-              <strong>
-                *** Falta poder modificar: SECCIÓN DOCUMENTACIÓN Y SECCIÓN
-                SERVICIOS ***
-              </strong>
-              (quitar este párrafo)
-            </p>
-            {/* ********************************************************* */}
             <p>
               <em>
                 Para modificar un documento en particular haga clic sobre el
@@ -444,9 +433,6 @@ const VehicleDetail = () => {
             {/*=========================================
               * Crear una tabla conlos siguientes campos:
                 TIPO || DETALLE  || VENCIMIENTO
-              - "licencia_nacional",
-              - "licencia_cargas-curso",
-              - "licencia_cargas-psicofisico",
               - "seguro",
               - "patente",
               - "revision_tecnica",

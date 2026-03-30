@@ -119,13 +119,6 @@ const VehicleDocumentationForm = () => {
                   required={true}
                 >
                   <option>Tipo de Documento</option>
-                  <option value="licencia_nacional">Licencia Nacional</option>
-                  <option value="licencia_cargas-curso">
-                    Licencia Cargas - Curso
-                  </option>
-                  <option value="licencia_cargas-psicofisico">
-                    Licencia Cargas - Psicofísico
-                  </option>
                   <option value="seguro">Seguro</option>
                   <option value="patente">Patente</option>
                   <option value="revision_tecnica">Revisión Técnica</option>
