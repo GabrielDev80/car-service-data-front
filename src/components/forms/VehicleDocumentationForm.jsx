@@ -157,7 +157,9 @@ const VehicleDocumentationForm = () => {
                 className="btn btn-outline-primary ms-3"
                 type="button"
                 onClick={() =>
-                  navigate(`/vehicleDetail/${localStorage.getItem("userId")}`)
+                  navigate(
+                    `/vehicleDetail/${localStorage.getItem("vehicleId")}`,
+                  )
                 }
               >
                 Atrás
