@@ -366,31 +366,34 @@ const VehicleDetail = () => {
                     text={"Guardar cambios"}
                   />
                 )}
+                <div className="form-buttons">
+                  {!isEditing && (
+                    <button
+                      className="btn btn-outline-success"
+                      type="button"
+                      onClick={() =>
+                        handleEditClick("vehicle", {
+                          make: currentVehicle.make,
+                          model: currentVehicle.model,
+                          year: currentVehicle.year,
+                          color: currentVehicle.color,
+                          vehicle_registration:
+                            currentVehicle.vehicle_registration,
+                        })
+                      }
+                    >
+                      Modificar datos
+                    </button>
+                  )}
+                  <button
+                    className="btn btn-outline-primary"
+                    type="button"
+                    onClick={() => navigate("/dashboard")}
+                  >
+                    Dashboard
+                  </button>
+                </div>
               </form>
-              {!isEditing && (
-                <button
-                  className="btn btn-outline-success"
-                  type="button"
-                  onClick={() =>
-                    handleEditClick("vehicle", {
-                      make: currentVehicle.make,
-                      model: currentVehicle.model,
-                      year: currentVehicle.year,
-                      color: currentVehicle.color,
-                      vehicle_registration: currentVehicle.vehicle_registration,
-                    })
-                  }
-                >
-                  Modificar datos
-                </button>
-              )}
-              <button
-                className="btn btn-outline-primary ms-3"
-                type="button"
-                onClick={() => navigate("/dashboard")}
-              >
-                Dashboard
-              </button>
             </div>
           </div>
           {/* Documentación del vehículo */}
@@ -502,7 +505,7 @@ const VehicleDetail = () => {
               ============================================*/}
             </table>
             <button
-              className="btn btn-outline-success"
+              className="btn btn-outline-success mb-3"
               type="button"
               onClick={() => navigate("/newService")}
             >

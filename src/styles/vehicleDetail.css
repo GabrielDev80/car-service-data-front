@@ -61,6 +61,15 @@ vehicle-image-container
   }
 }
 
+.form-buttons {
+  position: relative;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem 0 1rem 0;
+}
+
 /* info del vehículo con ancho máximo y centrado */
 .vehicle-info {
   width: 100%;
