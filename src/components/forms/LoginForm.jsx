@@ -1,4 +1,4 @@
-import "../../styles/LoginForm.css";
+import "../../styles/loginForm.css";
 import { useState } from "react";
 import api from "../../services/axios";
 import PasswordInput from "../PasswordInput";
