@@ -13,7 +13,7 @@ const Dashboard = () => {
 
   const licenseWarning = () => {
     const today = new Date();
-    const expDate = currentUser.expireDate;
+    const expDate = currentUser.license?.expireDate;
     const timeDiff = new Date(expDate) - today;
     const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
     {
