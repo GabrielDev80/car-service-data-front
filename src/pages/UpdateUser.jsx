@@ -61,7 +61,16 @@ const UpdateUser = () => {
         },
       }));
     } else {
-      setCurrentUser((prev) => ({ ...prev, [name]: value }));
+      if (name.startsWith("license.")) {
+        const fieldName = name.replace("license.", "");
+        setCurrentUser((prev) => ({
+          ...prev,
+          license: {
+            ...prev.license,
+            [fieldName]: value,
+          },
+        }));
+      }
     }
   };
 
