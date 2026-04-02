@@ -256,117 +256,122 @@ const VehicleDetail = () => {
                     <p>No hay imágenes disponibles</p>
                   )}{" "}
                 </div>
-                <p>
-                  <span>Marca:</span>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="make"
-                      value={editData.make}
-                      onChange={handleInputChange}
-                      className="form-control"
-                      style={{
-                        display: "inline-block",
-                        width: "auto",
-                        marginLeft: 8,
-                      }}
-                    />
-                  ) : (
-                    currentVehicle.make
-                  )}
-                </p>
-                <p>
-                  <span>Modelo:</span>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="model"
-                      value={editData.model}
-                      onChange={handleInputChange}
-                      className="form-control"
-                      style={{
-                        display: "inline-block",
-                        width: "auto",
-                        marginLeft: 8,
-                      }}
-                    />
-                  ) : (
-                    currentVehicle.model
-                  )}
-                </p>
-                <p>
-                  <span>Año:</span>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="year"
-                      value={editData.year}
-                      onChange={handleInputChange}
-                      className="form-control"
-                      style={{
-                        display: "inline-block",
-                        width: "auto",
-                        marginLeft: 8,
-                      }}
-                    />
-                  ) : (
-                    currentVehicle.year
-                  )}
-                </p>
-                <p>
-                  <span>Color:</span>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="color"
-                      value={editData.color}
-                      onChange={handleInputChange}
-                      className="form-control"
-                      style={{
-                        display: "inline-block",
-                        width: "auto",
-                        marginLeft: 8,
-                      }}
-                    />
-                  ) : (
-                    currentVehicle.color
-                  )}
-                </p>
-                <p>
-                  <span>Patente:</span>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="vehicle_registration"
-                      value={editData.vehicle_registration}
-                      onChange={handleInputChange}
-                      className="form-control"
-                      style={{
-                        display: "inline-block",
-                        width: "auto",
-                        marginLeft: 8,
-                      }}
-                    />
-                  ) : (
-                    currentVehicle.vehicle_registration
-                  )}
-                </p>
-                <p>
-                  <span>Fecha de creación:</span>
-                  {formatDate(currentVehicle.createdAt)}
-                </p>
-                <p>
-                  <span>Última modificación:</span>
-                  {formatDate(currentVehicle.updatedAt)}
-                </p>
-                {isEditing && (
-                  <Button
-                    color="btn-outline-primary"
-                    type="submit"
-                    text={"Guardar cambios"}
-                  />
-                )}
+                <div className="inputs">
+                  <p>
+                    <span>Marca:</span>
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        name="make"
+                        value={editData.make}
+                        onChange={handleInputChange}
+                        className="form-control"
+                        style={{
+                          display: "inline-block",
+                          width: "auto",
+                          marginLeft: 8,
+                        }}
+                      />
+                    ) : (
+                      currentVehicle.make
+                    )}
+                  </p>
+                  <p>
+                    <span>Modelo:</span>
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        name="model"
+                        value={editData.model}
+                        onChange={handleInputChange}
+                        className="form-control"
+                        style={{
+                          display: "inline-block",
+                          width: "auto",
+                          marginLeft: 8,
+                        }}
+                      />
+                    ) : (
+                      currentVehicle.model
+                    )}
+                  </p>
+                  <p>
+                    <span>Año:</span>
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        name="year"
+                        value={editData.year}
+                        onChange={handleInputChange}
+                        className="form-control"
+                        style={{
+                          display: "inline-block",
+                          width: "auto",
+                          marginLeft: 8,
+                        }}
+                      />
+                    ) : (
+                      currentVehicle.year
+                    )}
+                  </p>
+                  <p>
+                    <span>Color:</span>
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        name="color"
+                        value={editData.color}
+                        onChange={handleInputChange}
+                        className="form-control"
+                        style={{
+                          display: "inline-block",
+                          width: "auto",
+                          marginLeft: 8,
+                        }}
+                      />
+                    ) : (
+                      currentVehicle.color
+                    )}
+                  </p>
+                  <p>
+                    <span>Patente:</span>
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        name="vehicle_registration"
+                        value={editData.vehicle_registration}
+                        onChange={handleInputChange}
+                        className="form-control"
+                        style={{
+                          display: "inline-block",
+                          width: "auto",
+                          marginLeft: 8,
+                        }}
+                      />
+                    ) : (
+                      currentVehicle.vehicle_registration
+                    )}
+                  </p>
+                </div>
+                <div className="info-date">
+                  <p>
+                    <span>Fecha de creación:</span>
+                    {formatDate(currentVehicle.createdAt)}
+                  </p>
+                  <p>
+                    <span>Última modificación:</span>
+                    {formatDate(currentVehicle.updatedAt)}
+                  </p>
+                </div>
+
                 <div className="form-buttons">
+                  {isEditing && (
+                    <Button
+                      color="btn-outline-primary"
+                      type="submit"
+                      text={"Guardar cambios"}
+                    />
+                  )}
                   {!isEditing && (
                     <button
                       className="btn btn-outline-success"
