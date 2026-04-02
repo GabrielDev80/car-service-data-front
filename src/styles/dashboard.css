@@ -55,6 +55,9 @@ h2.title-section {
 }
 
 .license {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   margin: 0.5rem 0 0.5rem 0;
   & h5 {
     text-decoration: solid underline;
@@ -63,17 +66,18 @@ h2.title-section {
     display: block;
     padding-left: 1rem;
   }
-  & .licence-warning {
+  & .license-warning {
+    width: fit-content;
     display: flex;
     color: red;
     font-weight: bold;
     flex-direction: column;
     align-items: center;
     & .warn {
-      font-size: 2rem;
+      font-size: 1.75rem;
     }
     & .warn2 {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
     }
   }
 }
@@ -120,13 +124,13 @@ h2.title-section {
 }
 
 /* tabla responsiva: permitir scroll horizontal en pantallas pequeñas */
-.table-responsive-wapper {
+.table-responsive-wrapper {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   /* margin-top: 0.5rem; */
 }
-.table-responsive-wapper .table {
+.table-responsive-wrapper .table {
   width: 100%;
   border-collapse: collapse;
   margin: 10px 0;
@@ -141,22 +145,35 @@ table td {
 
 /* media query para pantallas pequeñas */
 @media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
   .user {
     flex-direction: column;
     align-items: center;
   }
+
   .user-image {
     width: 100%;
   }
+
   .user-info {
     width: 100%;
   }
+
   .user-image img {
     max-width: 160px;
   }
-  .user-cars .table-responsive-wrapper table {
-    min-width: 520px;
+
+  .licence .license-warning .warn {
+    font-size: 1.5rem;
   }
+
+  .licence .license-warning .warn2 {
+    font-size: 1rem;
+  }
+
   .user-cars p,
   .table {
     font-size: 0.75rem;

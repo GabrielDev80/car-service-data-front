@@ -19,7 +19,7 @@ const Dashboard = () => {
     {
       if (daysDiff > 0 && daysDiff <= 30) {
         return (
-          <div className="licence-warning">
+          <div className="license-warning">
             <p className="warn">Licencia próxima a vencer!!!</p>
             <p className="warn2">Restan {daysDiff} días</p>
           </div>
@@ -212,7 +212,7 @@ const Dashboard = () => {
               </em>
             </p>
             {/* TODO: Ajustar CSS para el componente VehicleDetail.jsx */}
-            <div className="table-responsive-wapper">
+            <div className="table-responsive-wrapper">
               <table className=" table-striped table-bordered table-hover table">
                 <thead>
                   <tr>

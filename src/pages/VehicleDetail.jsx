@@ -132,7 +132,7 @@ const VehicleDetail = () => {
   return (
     <>
       <HeaderApp />
-      <div className="container">
+      <div className="container-fluid">
         <div className="vehicle-detail-sections">
           {/* Datos del vehículo */}
           <div className="vehicle-detail">
@@ -405,34 +405,36 @@ const VehicleDetail = () => {
                 mismo.
               </em>
             </p>
-            <table className="table table-striped table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th>TIPO</th>
-                  <th>DETALLE</th>
-                  <th>VENCIMIENTO</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentVehicle.documentation.map((document) => (
-                  <tr
-                    key={document._id}
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      localStorage.setItem(
-                        "docToEdit",
-                        JSON.stringify(document),
-                      );
-                      navigate("/vehicleDocsForm");
-                    }}
-                  >
-                    <td>{capitalizeFirstLetter(document.document_name)}</td>
-                    <td>{document.description}</td>
-                    <td>{formatDate(document.expiration_date)}</td>
+            <div className="table-responsive-wrapper table-documentation">
+              <table className="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>TIPO</th>
+                    <th>DETALLE</th>
+                    <th>VENCIMIENTO</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {currentVehicle.documentation.map((document) => (
+                    <tr
+                      key={document._id}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        localStorage.setItem(
+                          "docToEdit",
+                          JSON.stringify(document),
+                        );
+                        navigate("/vehicleDocsForm");
+                      }}
+                    >
+                      <td>{capitalizeFirstLetter(document.document_name)}</td>
+                      <td>{document.description}</td>
+                      <td>{formatDate(document.expiration_date)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
             {/*=========================================
               * Crear una tabla conlos siguientes campos:
                 TIPO || DETALLE  || VENCIMIENTO
@@ -443,7 +445,7 @@ const VehicleDetail = () => {
               - "otro"
               ============================================*/}
             <button
-              className="btn btn-outline-success"
+              className="btn btn-outline-success add-button"
               type="button"
               onClick={() => navigate("/vehicleDocsForm")}
             >
@@ -459,53 +461,87 @@ const VehicleDetail = () => {
                 mismo.
               </em>
             </p>
-            <table className="table table-striped table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th>Fecha</th>
-                  <th>Tipo</th>
-                  <th>Detalle</th>
-                  <th>Kilometraje</th>
-                  <th>Costo</th>
-                  <th>Lugar</th>
-                  <th>Km prox. serv.</th>
-                  <th>Fecha prox. serv.</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentVehicle.services.map((service) => (
-                  <tr
-                    key={service._id}
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      localStorage.setItem(
-                        "serviceToEdit",
-                        JSON.stringify(service),
-                      );
-                      navigate("/newService");
-                    }}
-                  >
-                    <td>{formatDate(service.service_date)}</td>
-                    <td>{capitalizeFirstLetter(service.service_type)}</td>
-                    <td>{service.service_description}</td>
-                    <td>{service.service_mileage}</td>
-                    <td>{formatCurrency(service.service_cost)}</td>
-                    <td>{service.service_location}</td>
-                    <td>{service.next_service_mileage}</td>
-                    <td>{formatDate(service.next_service_date)}</td>
+            <div className="table-responsive-wrapper table-services">
+              <table className="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Detalle</th>
+                    <th>Kilometraje</th>
+                    <th>Costo</th>
+                    <th>Lugar</th>
+                    <th>Km prox. serv.</th>
+                    <th>Fecha prox. serv.</th>
                   </tr>
-                ))}
-              </tbody>
-              {/*=========================================
+                </thead>
+                <tbody>
+                  {currentVehicle.services.map((service) => (
+                    <tr
+                      key={service._id}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        localStorage.setItem(
+                          "serviceToEdit",
+                          JSON.stringify(service),
+                        );
+                        navigate("/newService");
+                      }}
+                    >
+                      <td>
+                        <p className="table-content">
+                          {formatDate(service.service_date)}
+                        </p>
+                      </td>
+                      <td>
+                        <p className="table-content">
+                          {capitalizeFirstLetter(service.service_type)}
+                        </p>
+                      </td>
+                      <td>
+                        <p className="table-content">
+                          {service.service_description}
+                        </p>
+                      </td>
+                      <td>
+                        <p className="table-content">
+                          {service.service_mileage}
+                        </p>
+                      </td>
+                      <td>
+                        <p className="table-content">
+                          {formatCurrency(service.service_cost)}
+                        </p>
+                      </td>
+                      <td>
+                        <p className="table-content">
+                          {service.service_location}
+                        </p>
+                      </td>
+                      <td>
+                        <p className="table-content">
+                          {service.next_service_mileage}
+                        </p>
+                      </td>
+                      <td>
+                        <p className="table-content">
+                          {formatDate(service.next_service_date)}
+                        </p>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+                {/*=========================================
               - Cambios de aceite
               - Reparaciones
               - Bateria
               - Cubiertas
               - Etc
               ============================================*/}
-            </table>
+              </table>
+            </div>
             <button
-              className="btn btn-outline-success mb-3"
+              className="btn btn-outline-success mb-3 add-button"
               type="button"
               onClick={() => navigate("/newService")}
             >
