@@ -8,6 +8,7 @@ export const formatDate = (dateString) => {
     day: "numeric",
     // hour: "2-digit",
     // minute: "2-digit",
+    timeZone: "UTC",
   };
   return new Intl.DateTimeFormat("es-ES", options).format(date);
 };
