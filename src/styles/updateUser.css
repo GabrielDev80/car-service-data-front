@@ -101,7 +101,7 @@ form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 /* media query para pantallas pequeñas */
@@ -118,5 +118,14 @@ form {
   }
   .user-image img {
     max-width: 160px;
+  }
+  .inputs {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .buttons {
+    gap: 0.5rem;
   }
 }
