@@ -124,8 +124,8 @@
 @media (max-width: 768px) {
   .vehicle-info {
     & form {
-      & .span {
-        font-size: 0.7rem;
+      & p {
+        font-size: 0.9rem;
       }
     }
     & .ul {

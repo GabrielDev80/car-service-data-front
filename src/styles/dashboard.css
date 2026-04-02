@@ -166,12 +166,15 @@ table td {
     max-width: 160px;
   }
 
-  .licence .license-warning .warn {
-    font-size: 1.5rem;
-  }
-
-  .licence .license-warning .warn2 {
-    font-size: 1rem;
+  .license {
+    & .license-warning {
+      & .warn {
+        font-size: 1.5rem;
+      }
+      & .warn2 {
+        font-size: 1rem;
+      }
+    }
   }
 
   .user-cars p,
