@@ -51,10 +51,12 @@ const Dashboard = () => {
     fetchUser();
   }, []);
 
+  // Actualizar los datos del usuario
   const handleUpdateUser = () => {
     navigate("/updateUser");
   };
 
+  // Cerrar sesión de usuario
   const handleLogout = async () => {
     try {
       await api.post("/users/logout");
@@ -80,6 +82,7 @@ const Dashboard = () => {
   if (!currentUser) {
     return <p>Cargando datos del usuario...</p>;
   }
+
   return (
     <>
       <div className="dashboard-container">
@@ -194,7 +197,6 @@ const Dashboard = () => {
                   onClick={handleLogout}
                   text={"Cerrar sesión"}
                 />
-                {/* TODO: Ajustar CSS para el componente VehicleForm.jsx */}
               </div>
             </div>
           </div>
@@ -211,7 +213,6 @@ const Dashboard = () => {
                 mismo.
               </em>
             </p>
-            {/* TODO: Ajustar CSS para el componente VehicleDetail.jsx */}
             <div className="table-responsive-wrapper">
               <table className=" table-striped table-bordered table-hover table">
                 <thead>

@@ -137,6 +137,8 @@ const VehicleDetail = () => {
           {/* Datos del vehículo */}
           <div className="vehicle-detail">
             <h3 className="title-section text-center">Datos del vehículo</h3>
+
+            {/* Imagen del vehículo */}
             <div className="vehicle-image-container">
               <div className="vehicle-image">
                 <img
@@ -204,6 +206,7 @@ const VehicleDetail = () => {
                 </div>
               )}
             </div>
+
             {/* Información básica del vehículo */}
             <div className="vehicle-info">
               <form onSubmit={handleEditSubmit}>
@@ -401,6 +404,7 @@ const VehicleDetail = () => {
               </form>
             </div>
           </div>
+
           {/* Documentación del vehículo */}
           <h3 className="title-section">Documentación</h3>
           <div className="vehicle-documentation">
@@ -440,23 +444,18 @@ const VehicleDetail = () => {
                 </tbody>
               </table>
             </div>
-            {/*=========================================
-              * Crear una tabla conlos siguientes campos:
-                TIPO || DETALLE  || VENCIMIENTO
-              - "seguro",
-              - "patente",
-              - "revision_tecnica",
-              - "ruta",
-              - "otro"
-              ============================================*/}
             <button
-              className="btn btn-outline-success add-button"
+              className="btn btn-outline-success mb-3 add-button"
               type="button"
-              onClick={() => navigate("/vehicleDocsForm")}
+              onClick={() => {
+                localStorage.removeItem("docToEdit");
+                navigate("/vehicleDocsForm");
+              }}
             >
               Agregar Documentación
             </button>
           </div>
+
           {/* Servicios y mantenimientos del vehículo */}
           <h3 className="title-section">Servicios y Mantenimientos</h3>
           <div className="vehicle-services">
@@ -536,19 +535,15 @@ const VehicleDetail = () => {
                     </tr>
                   ))}
                 </tbody>
-                {/*=========================================
-              - Cambios de aceite
-              - Reparaciones
-              - Bateria
-              - Cubiertas
-              - Etc
-              ============================================*/}
               </table>
             </div>
             <button
               className="btn btn-outline-success mb-3 add-button"
               type="button"
-              onClick={() => navigate("/newService")}
+              onClick={() => {
+                localStorage.removeItem("docToEdit");
+                navigate("/newService");
+              }}
             >
               Agregar Mantenimiento
             </button>
