@@ -1,3 +1,4 @@
+import "../../styles/vehicleForm.css";
 import api from "../../services/axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -129,12 +130,16 @@ const VehicleServiceForm = () => {
   return (
     <>
       <HeaderApp />
-      <div className="container mt-5">
-        <h1>{editingService ? "Editar Servicio" : "Nuevo Servicio"}</h1>
-        <form className="w-75" onSubmit={handleSubmit}>
-          <div className="mb-3">
+      <div className="container-fluid form-container">
+        <div className="data">
+          <h1 className="title">
+            {editingService ? "Editar Servicio" : "Agregar Servicio"}
+          </h1>
+        </div>
+        <form className="form" onSubmit={handleSubmit}>
+          <div className="group">
             <label htmlFor="service_date" className="form-label">
-              Fecha de Servicio:
+              Fecha de Servicio
             </label>
             <input
               type="date"
@@ -146,10 +151,9 @@ const VehicleServiceForm = () => {
               required
             />
           </div>
-
-          <div className="mb-3">
+          <div className="group">
             <label htmlFor="service_type" className="form-label">
-              Tipo de Servicio:
+              Tipo de Servicio
             </label>
             <select
               id="service_type"
@@ -157,9 +161,13 @@ const VehicleServiceForm = () => {
               className="form-select"
               value={formData.service_type}
               onChange={handleChange}
+              placeholder="Tipo de Servicio"
               required
             >
-              <option value="">Seleccionar tipo</option>
+              {/* <optgroup label="Seleccionar tipo de Servicio"> */}
+              <option value="" disabled>
+                Seleccionar tipo
+              </option>
               <option value="batería">Batería</option>
               <option value="cambio de aceite">Cambio de aceite</option>
               <option value="cambio de correas">Cambio de correas</option>
@@ -167,12 +175,12 @@ const VehicleServiceForm = () => {
               <option value="reparación">Reparación</option>
               <option value="cubiertas">Cubiertas</option>
               <option value="otro">Otro</option>
+              {/* </optgroup> */}
             </select>
           </div>
-
-          <div className="mb-3">
+          <div className="group">
             <label htmlFor="service_description" className="form-label">
-              Detalle:
+              Descripción del Servicio
             </label>
             <textarea
               id="service_description"
@@ -181,13 +189,12 @@ const VehicleServiceForm = () => {
               value={formData.service_description}
               onChange={handleChange}
               rows="3"
-              placeholder="Describe el servicio realizado"
+              placeholder="Detalle del servicio realizado"
             />
           </div>
-
-          <div className="mb-3">
+          <div className="group">
             <label htmlFor="service_mileage" className="form-label">
-              Kilometraje:
+              Kilometraje
             </label>
             <input
               type="number"
@@ -196,13 +203,12 @@ const VehicleServiceForm = () => {
               className="form-control"
               value={formData.service_mileage}
               onChange={handleChange}
-              placeholder="Ej: 50000"
+              placeholder="Kilometraje ej: 50000"
             />
           </div>
-
-          <div className="mb-3">
+          <div className="group">
             <label htmlFor="service_cost" className="form-label">
-              Costo:
+              Costo
             </label>
             <input
               type="number"
@@ -212,13 +218,12 @@ const VehicleServiceForm = () => {
               value={formData.service_cost}
               onChange={handleChange}
               step="0.01"
-              placeholder="Ej: 500.00"
+              placeholder="Costo ej: 500.00"
             />
           </div>
-
-          <div className="mb-3">
+          <div className="group">
             <label htmlFor="service_location" className="form-label">
-              Lugar:
+              Lugar
             </label>
             <input
               type="text"
@@ -227,13 +232,12 @@ const VehicleServiceForm = () => {
               className="form-control"
               value={formData.service_location}
               onChange={handleChange}
-              placeholder="Ej: Taller XYZ"
+              placeholder="Lugar ej: Taller XYZ"
             />
           </div>
-
-          <div className="mb-3">
+          <div className="group">
             <label htmlFor="next_service_mileage" className="form-label">
-              Km próximo servicio:
+              Próximo Servicio - Kilometraje
             </label>
             <input
               type="number"
@@ -242,13 +246,12 @@ const VehicleServiceForm = () => {
               className="form-control"
               value={formData.next_service_mileage}
               onChange={handleChange}
-              placeholder="Ej: 60000"
+              placeholder="Km próximo servicio ej: 60000"
             />
           </div>
-
-          <div className="mb-3">
+          <div className="group">
             <label htmlFor="next_service_date" className="form-label">
-              Fecha próximo servicio:
+              Próximo Servicio - Fecha
             </label>
             <input
               type="date"
@@ -257,16 +260,16 @@ const VehicleServiceForm = () => {
               className="form-control"
               value={formData.next_service_date}
               onChange={handleChange}
+              placeholder="Fecha próximo servicio"
             />
           </div>
-
-          <div className="d-flex gap-2">
-            <button type="submit" className="btn btn-primary">
+          <div className="buttons">
+            <button type="submit" className="btn btn-primary button">
               {editingService ? "Actualizar" : "Guardar"}
             </button>
             <button
+              className="btn btn-secondary button"
               type="button"
-              className="btn btn-secondary"
               onClick={handleCancel}
             >
               Cancelar

@@ -1,3 +1,4 @@
+import "../../styles/vehicleForm.css";
 import api from "../../services/axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -60,16 +61,14 @@ const VehicleDocumentationForm = () => {
 
       let updatedDocs;
       if (editingDoc && editingDoc._id) {
-        // console.log("editingDoc:", editingDoc);
-        // console.log("currentDocs:", currentDocs);
-        // console.log("formData:", formData);
-        // Convierte expiration_date a ISO si está en formato corto
+        // Editar documentación existente
         updatedDocs = currentDocs.map((doc) =>
           doc._id === editingDoc._id
             ? { ...doc, ...formDataToSave, _id: doc._id }
             : doc,
         );
       } else {
+        // Agregar nueva documentación
         updatedDocs = [
           ...currentDocs,
           {
@@ -102,71 +101,81 @@ const VehicleDocumentationForm = () => {
       Swal.fire("Error", "No se pudo guardar la documentación.", err);
     }
   };
+
+  const handleCancel = () => {
+    localStorage.removeItem("docToEdit");
+    const vehicleId = localStorage.getItem("vehicleId");
+    navigate(`/vehicleDetail/${vehicleId}`);
+  };
+
   return (
     <>
       <HeaderApp />
-      <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <h3>Agregar / Modificar Documentación del vehículo</h3>
-            <form onSubmit={handleSubmit}>
-              <div className="input-group mb-2">
-                <select
-                  className="form-control"
-                  name="document_name"
-                  value={formData.document_name}
-                  onChange={handleChange}
-                  required={true}
-                >
-                  <option>Tipo de Documento</option>
-                  <option value="seguro">Seguro</option>
-                  <option value="patente">Patente</option>
-                  <option value="revision_tecnica">Revisión Técnica</option>
-                  <option value="ruta">RUTA</option>
-                  <option value="otro">Otro</option>
-                </select>
-              </div>
-              <div className="input-group mb-2">
-                <input
-                  type="text"
-                  className="form-control"
-                  name="description"
-                  placeholder="Descripción"
-                  value={formData.description}
-                  onChange={handleChange}
-                  required={true}
-                />
-              </div>
-              <div className="input-group mb-2">
-                <input
-                  type="date"
-                  className="form-control"
-                  name="expiration_date"
-                  placeholder="Fecha de vencimiento"
-                  value={formData.expiration_date}
-                  onChange={handleChange}
-                  required={true}
-                />
-              </div>
-              <button type="submit" className="btn btn-outline-success">
-                {editingDoc
-                  ? "Modificar documentación"
-                  : "Agregar documentación"}
-              </button>{" "}
-              <button
-                className="btn btn-outline-primary ms-3"
-                type="button"
-                onClick={() =>
-                  navigate(
-                    `/vehicleDetail/${localStorage.getItem("vehicleId")}`,
-                  )
-                }
-              >
-                Atrás
-              </button>
-            </form>
-          </div>
+      <div className="container-fluid form-container">
+        <div className="data">
+          <h1 className="title">
+            {editingDoc ? "Editar Documentación" : "Agregar Documentación"}
+          </h1>
         </div>
+        <form className="form" onSubmit={handleSubmit}>
+          <div className="group">
+            <label htmlFor="document_name" className="form-label">
+              Tipo de Documento
+            </label>
+            <select
+              className="form-control"
+              name="document_name"
+              value={formData.document_name}
+              onChange={handleChange}
+              required={true}
+            >
+              <option disabled value=""></option>
+              <option value="seguro">Seguro</option>
+              <option value="patente">Patente</option>
+              <option value="revision_tecnica">Revisión Técnica</option>
+              <option value="ruta">RUTA</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+          <div className="group">
+            <label htmlFor="description" className="form-label">
+              Descripción
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              required={true}
+            />
+          </div>
+          <div className="group">
+            <label htmlFor="expiration_date" className="form-label">
+              Fecha de vencimiento
+            </label>
+            <input
+              type="date"
+              className="form-control"
+              name="expiration_date"
+              value={formData.expiration_date}
+              onChange={handleChange}
+              required={true}
+            />
+          </div>
+          <div className="buttons">
+            <button type="submit" className="btn btn-outline-success button">
+              {editingDoc ? "Modificar documentación" : "Agregar documentación"}
+            </button>
+            <button
+              className="btn btn-outline-primary button"
+              type="button"
+              onClick={handleCancel}
+            >
+              Atrás
+            </button>
+          </div>
+        </form>
       </div>
     </>
   );
