@@ -130,20 +130,51 @@
 }
 
 /* tablas: permitir scroll horizontal en pantallas pequeñas */
-.vehicle-documentation,
-.vehicle-services {
+.table-responsive-wrapper {
+  overflow-x: auto;
+}
+
+.vehicle-services,
+.vehicle-documentation {
   width: 100%;
   margin-top: 1rem;
 }
 
-.vehicle-services .table {
-  min-width: max-content;
-  /* display: block; */
+.vehicle-services .table,
+.vehicle-documentation .table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.vehicle-documentation .table,
-.vehicle-services .table {
-  width: 100%;
+.vehicle-documentation .table {
+  table-layout: fixed;
+}
+
+.vehicle-services .table th,
+.vehicle-services .table td,
+.vehicle-documentation .table th,
+.vehicle-documentation .table td {
+  white-space: normal;
+  vertical-align: middle;
+  padding: 8px;
+}
+
+.vehicle-documentation .table td,
+.vehicle-services .table td {
+  min-height: 50px;
+}
+
+.doc-item {
+  cursor: pointer;
+}
+/* ! Revisar por que motivo en mobile se rompe  */
+
+td.trash {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
 }
 
 @media (max-width: 768px) {
@@ -174,9 +205,41 @@
       }
     }
   }
-  .vehicle-services .table {
-    overflow-x: auto;
-    display: block;
+
+  /* .vehicle-documentation .table td,
+  .vehicle-services .table td {
+    height: 50px;
+    vertical-align: middle;
+    padding: 8px;
+  } */
+
+  .vehicle-services .table tr,
+  .vehicle-documentation .table tr {
+    height: 60px;
+  }
+
+  .vehicle-services .table td,
+  .vehicle-documentation .table td {
+    height: 60px;
+    padding: 6px 4px;
+    font-size: 0.8rem;
+  }
+
+  .vehicle-documentation .table td p.table-content,
+  .vehicle-services .table td p.table-content {
+    margin: 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+    max-height: 2.4em; /* Limita a 2 líneas con line-height 1.2 */
+  }
+
+  td.trash {
+    gap: 4px;
   }
 
   .add-button {

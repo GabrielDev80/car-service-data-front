@@ -106,6 +106,38 @@ const VehicleDetail = () => {
     setEditData({ ...editData, [e.target.name]: e.target.value });
   };
 
+  // Función para eliminar un documento
+  const handleDeleteDocument = async (event, documentId) => {
+    event.stopPropagation(); // Evitar que se dispare el click de la fila
+
+    const result = await Swal.fire({
+      title: "¿Eliminar este documento?",
+      text: "Esta acción no se puede deshacer",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      const updateDocs = currentVehicle.documentation.filter(
+        (doc) => doc._id !== documentId,
+      );
+
+      await api.patch(`/vehicles/${currentVehicle._id}`, {
+        documentation: updateDocs,
+      });
+
+      setCurrentVehicle({ ...currentVehicle, documentation: updateDocs });
+
+      Swal.fire("Eliminado", "El documento fue eliminado", "success");
+    } catch (error) {
+      Swal.fire("Error", "No se pudo eliminar el documento", error);
+    }
+  };
+
   // Función para manejar el submit del formulario
   const handleEditSubmit = async (e) => {
     e.preventDefault();
@@ -426,8 +458,8 @@ const VehicleDetail = () => {
                 <tbody>
                   {currentVehicle.documentation.map((document) => (
                     <tr
+                      className="doc-item"
                       key={document._id}
-                      style={{ cursor: "pointer" }}
                       onClick={() => {
                         localStorage.setItem(
                           "docToEdit",
@@ -436,9 +468,25 @@ const VehicleDetail = () => {
                         navigate("/vehicleDocsForm");
                       }}
                     >
-                      <td>{capitalizeFirstLetter(document.document_name)}</td>
-                      <td>{document.description}</td>
-                      <td>{formatDate(document.expiration_date)}</td>
+                      <td>
+                        <p className="table-content">
+                          {capitalizeFirstLetter(document.document_name)}
+                        </p>
+                      </td>
+                      <td>
+                        <p className="table-content">{document.description}</p>
+                      </td>
+                      <td className="trash">
+                        <p className="table-content">
+                          {formatDate(document.expiration_date)}
+                        </p>
+                        <i
+                          className="bi bi-trash text-danger"
+                          style={{ cursor: "pointer", fontSize: "1.2rem" }}
+                          title="Eliminar documento"
+                          onClick={(e) => handleDeleteDocument(e, document._id)}
+                        ></i>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
