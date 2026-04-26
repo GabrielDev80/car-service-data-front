@@ -75,6 +75,7 @@ const VehicleDetail = () => {
         headers: {
           "Content-Type": "multipart/form-data",
         },
+        timeout: 30000, // 30 segundos para uploads
       });
       Swal.fire({
         position: "top-end",
