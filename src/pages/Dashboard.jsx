@@ -92,7 +92,7 @@ const Dashboard = () => {
           </div>
           <h2 className="title-section">Usuario</h2>
           <div className="col-12 text-start user">
-            <div className="user-image">
+            <div className="img-uniform">
               {currentUser.thumbnail ? (
                 <>
                   <img
@@ -102,7 +102,6 @@ const Dashboard = () => {
                         : `data:image/jpeg;base64,${currentUser.thumbnail}`
                     }
                     alt="Imagen de usuario"
-                    style={{ maxWidth: 200, maxHeight: 200 }}
                   />
                 </>
               ) : (

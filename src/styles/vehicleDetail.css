@@ -6,6 +6,8 @@
   align-items: center;
   gap: 1rem;
 }
+
+/* Datos del Vehículo */
 .vehicle-detail {
   width: 100%;
   display: flex;
@@ -14,45 +16,113 @@
   gap: 1rem;
 }
 
-/* centrar imagen y limitar su tamaño */
+/* Centrar imagen principal y limitar su tamaño */
 .vehicle-image-container {
   position: relative;
-  display: inline-block;
-  & .vehicle-image {
-    position: relative;
-    max-width: 400px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    /* margin-bottom: 1rem; */
-    & img {
-      max-width: 500px;
-      max-height: 300px;
-    }
-    & .vehicle-image-icon {
-      position: absolute;
-      top: -8px;
-      right: -15px;
-      cursor: pointer;
-      background: #fff;
-      border-radius: 50%;
-      padding: 16px;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-      width: 52px;
-      height: 52px;
-      /* opacity: 0.7; */
-      background-color: cyan;
-      & img {
-        position: relative;
-        top: -4px;
-        width: 20px;
-        height: 20px;
-      }
-    }
-  }
+  display: flex;
+  flex-direction: column;
+  height: 265px;
+}
+.vehicle-image-container .img-uniform {
+  width: 100%;
+  max-width: 344px;
+  height: 225px;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 10%;
+  display: block;
+  overflow: hidden;
+}
+.vehicle-image-container .img-uniform .img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vehicle-image-container .img-uniform .vehicle-image-icon {
+  position: absolute;
+  top: -8px;
+  right: -15px;
+  cursor: pointer;
+  background: #fff;
+  border-radius: 50%;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  width: 52px;
+  height: 52px;
+  background-color: cyan;
+}
+.vehicle-image-container .img-uniform .vehicle-image-icon img {
+  position: relative;
+  top: -4px;
+  width: 20px;
+  height: 20px;
 }
 
+/* Información básica del vehículo */
+.vehicle-info {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  display: block;
+  line-height: 2rem;
+}
+/* Set de imágenes */
+.vehicle-info ul {
+  list-style-type: none;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.vehicle-info ul li {
+  display: inline-block;
+  width: auto;
+  height: 70px;
+}
+.vehicle-info ul li img {
+  height: 100%;
+  object-fit: contain;
+}
+/* Leyenda */
+.vehicle-info .legend {
+  display: block;
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 1.1rem;
+  color: blue;
+}
+/* Datos del vehículo e Info Date*/
+.vehicle-info form .inputs {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+.vehicle-info form .info-date {
+  width: 95%;
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: start;
+  gap: 0.5rem;
+}
+.vehicle-info form .inputs .item {
+  display: grid;
+}
+.vehicle-info form .inputs .item,
+.vehicle-info form .info-date .item {
+  font-size: 1.3rem;
+}
+.vehicle-info form .inputs .item .t-item,
+.vehicle-info form .info-date .item .t-item {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+/* Buttons */
 .form-buttons {
   position: relative;
   width: 50%;
@@ -61,95 +131,30 @@
   gap: 1rem;
   margin: 1rem 0 1rem 0;
 }
-
-/* info del vehículo con ancho máximo y centrado */
-.vehicle-info {
-  width: 100%;
-  max-width: 720px;
-  margin: 0 auto;
-  display: block;
-  line-height: 2rem;
-  & ul {
-    list-style-type: none;
-    margin-bottom: 0;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: center;
-    justify-content: space-evenly;
-    & li {
-      width: 100px;
-      height: 70px;
-      & img {
-        height: 100%;
-        object-fit: contain;
-        display: block;
-      }
-    }
-  }
-  & form {
-    & .span {
-      display: block;
-      font-size: 1rem;
-      color: #007bff;
-      text-align: center;
-    }
-    & p {
-      font-size: 1rem;
-      & span {
-        font-weight: bold;
-      }
-    }
-    & .inputs {
-      width: 90%;
-      display: flex;
-      flex-direction: column;
-      & p {
-        display: grid;
-        font-size: 1rem;
-      }
-    }
-    & .info-date {
-      width: 95%;
-      margin: 1rem 0;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: start;
-      gap: 0.5rem;
-      & p {
-        font-size: 0.9rem;
-        & span {
-          font-weight: bold;
-        }
-      }
-    }
-  }
-}
-
+/* Documentación del Vehículo y Servicios del Vehículo  */
 /* tablas: permitir scroll horizontal en pantallas pequeñas */
 .table-responsive-wrapper {
   overflow-x: auto;
 }
-
 .vehicle-services,
 .vehicle-documentation {
   width: 100%;
   margin-top: 1rem;
 }
-
+/* Legendas */
+.vehicle-documentation p.vd-legend,
+.vehicle-services p.vs-legend {
+  font-size: 1.4rem;
+}
+/* Tablas */
 .vehicle-services .table,
 .vehicle-documentation .table {
   width: 100%;
   border-collapse: collapse;
 }
-
 .vehicle-documentation .table {
   table-layout: fixed;
 }
-
 .vehicle-services .table th,
 .vehicle-services .table td,
 .vehicle-documentation .table th,
@@ -158,17 +163,13 @@
   vertical-align: middle;
   padding: 8px;
 }
-
 .vehicle-documentation .table td,
 .vehicle-services .table td {
   min-height: 50px;
 }
-
 .doc-item {
   cursor: pointer;
 }
-/* ! Revisar por que motivo en mobile se rompe  */
-
 td.trash {
   display: flex;
   flex-direction: row;
@@ -178,53 +179,62 @@ td.trash {
 }
 
 @media (max-width: 768px) {
-  .vehicle-info {
-    & form {
-      & p {
-        font-size: 0.9rem;
-      }
-    }
-    & .ul {
-      justify-content: center;
-      padding-left: 0;
-    }
-  }
+  /* Centrar imagen principal y limitar su tamaño */
   .vehicle-image-container {
-    & .vehicle-image {
-      max-width: 200px;
-      & .vehicle-image-icon {
-        width: 40px;
-        height: 40px;
-        & img {
-          position: relative;
-          top: -10px;
-          left: -3px;
-          width: 16px;
-          height: 16px;
-        }
-      }
-    }
+    height: 135px;
   }
-
-  /* .vehicle-documentation .table td,
-  .vehicle-services .table td {
-    height: 50px;
-    vertical-align: middle;
-    padding: 8px;
-  } */
-
+  .vehicle-image-container .img-uniform {
+    max-width: 200px;
+    height: 120px;
+  }
+  .vehicle-image-container .img-uniform .vehicle-image-icon {
+    width: 40px;
+    height: 40px;
+  }
+  .vehicle-image-container .img-uniform .vehicle-image-icon img {
+    position: relative;
+    top: -10px;
+    left: -3px;
+    width: 16px;
+    height: 16px;
+  }
+  /* Información básica del vehículo */
+  /* Set de imágenes */
+  .vehicle-info ul {
+    padding-left: 0;
+  }
+  .vehicle-info ul li {
+    height: 60px;
+  }
+  /* Leyenda */
+  .vehicle-info .legend {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+  }
+  /* Datos del vehículo */
+  .vehicle-info form .inputs .item,
+  .vehicle-info form .inputs .item .t-item,
+  .vehicle-info form .info-date .item,
+  .vehicle-info form .info-date .item .t-item {
+    font-size: 0.9rem;
+  }
+  /* Documentación del Vehículo y Servicios del Vehículo  */
+  /* Legends */
+  .vehicle-documentation p.vd-legend,
+  .vehicle-services p.vs-legend {
+    font-size: 0.9rem;
+  }
+  /* Tables */
   .vehicle-services .table tr,
   .vehicle-documentation .table tr {
     height: 60px;
   }
-
   .vehicle-services .table td,
   .vehicle-documentation .table td {
     height: 60px;
     padding: 6px 4px;
     font-size: 0.8rem;
   }
-
   .vehicle-documentation .table td p.table-content,
   .vehicle-services .table td p.table-content {
     margin: 0;
@@ -237,11 +247,9 @@ td.trash {
     line-height: 1.2;
     max-height: 2.4em; /* Limita a 2 líneas con line-height 1.2 */
   }
-
   td.trash {
     gap: 4px;
   }
-
   .add-button {
     width: min-content;
   }

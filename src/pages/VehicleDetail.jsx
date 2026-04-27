@@ -173,8 +173,9 @@ const VehicleDetail = () => {
 
             {/* Imagen del vehículo */}
             <div className="vehicle-image-container">
-              <div className="vehicle-image">
+              <div className="img-uniform">
                 <img
+                  className="img"
                   src={
                     Array.isArray(currentVehicle.thumbnails) &&
                     currentVehicle.thumbnails.length > 0
@@ -205,6 +206,7 @@ const VehicleDetail = () => {
                   multiple
                 />
               </div>
+              {/* Carga de imágenes */}
               {selectedImages && selectedImages.length > 0 && (
                 <div style={{ marginTop: 10 }}>
                   <span>Imágen/es seleccionada/s:</span>
@@ -239,14 +241,13 @@ const VehicleDetail = () => {
                 </div>
               )}
             </div>
-
             {/* Información básica del vehículo */}
             <div className="vehicle-info">
               <form onSubmit={handleEditSubmit}>
-                <p>
+                {/* <p>
                   <span>Vehicle Id:</span>
                   {currentVehicle._id}
-                </p>
+                </p> */}
                 <div>
                   <span>Imágenes:</span>
                   {currentVehicle.thumbnails?.length > 0 ? (
@@ -256,14 +257,10 @@ const VehicleDetail = () => {
                           <li
                             key={idx}
                             style={{
-                              display: "inline-block",
-                              marginRight: 10,
                               border:
                                 idx === mainImageIdx
-                                  ? "2px solid #007bff"
+                                  ? "2px solid #ff0000"
                                   : "2px solid transparent",
-                              borderRadius: 4,
-                              cursor: "pointer",
                             }}
                             onClick={() => setMainImageIdx(idx)}
                             title="Seleccionar como principal"
@@ -284,7 +281,7 @@ const VehicleDetail = () => {
                           </li>
                         ))}
                       </ul>
-                      <span className="span">
+                      <span className="legend">
                         Hacé clic en una imagen para mostrarla como principal
                       </span>
                     </div>
@@ -292,9 +289,10 @@ const VehicleDetail = () => {
                     <p>No hay imágenes disponibles</p>
                   )}{" "}
                 </div>
+                {/* Datos del vehículo */}
                 <div className="inputs">
-                  <p>
-                    <span>Marca:</span>
+                  <p className="item">
+                    <span className="t-item">Marca:</span>
                     {isEditing ? (
                       <input
                         type="text"
@@ -312,8 +310,8 @@ const VehicleDetail = () => {
                       currentVehicle.make
                     )}
                   </p>
-                  <p>
-                    <span>Modelo:</span>
+                  <p className="item">
+                    <span className="t-item">Modelo:</span>
                     {isEditing ? (
                       <input
                         type="text"
@@ -331,8 +329,8 @@ const VehicleDetail = () => {
                       currentVehicle.model
                     )}
                   </p>
-                  <p>
-                    <span>Año:</span>
+                  <p className="item">
+                    <span className="t-item">Año:</span>
                     {isEditing ? (
                       <input
                         type="text"
@@ -350,8 +348,8 @@ const VehicleDetail = () => {
                       currentVehicle.year
                     )}
                   </p>
-                  <p>
-                    <span>Color:</span>
+                  <p className="item">
+                    <span className="t-item">Color:</span>
                     {isEditing ? (
                       <input
                         type="text"
@@ -369,8 +367,8 @@ const VehicleDetail = () => {
                       currentVehicle.color
                     )}
                   </p>
-                  <p>
-                    <span>Patente:</span>
+                  <p className="item">
+                    <span className="t-item">Patente:</span>
                     {isEditing ? (
                       <input
                         type="text"
@@ -389,17 +387,18 @@ const VehicleDetail = () => {
                     )}
                   </p>
                 </div>
+                {/* Info Date */}
                 <div className="info-date">
-                  <p>
-                    <span>Fecha de creación:</span>
+                  <p className="item">
+                    <span className="t-item">Fecha de creación:</span>
                     {formatDate(currentVehicle.createdAt)}
                   </p>
-                  <p>
-                    <span>Última modificación:</span>
+                  <p className="item">
+                    <span className="t-item">Última modificación:</span>
                     {formatDate(currentVehicle.updatedAt)}
                   </p>
                 </div>
-
+                {/* Button */}
                 <div className="form-buttons">
                   {isEditing && (
                     <Button
@@ -441,7 +440,7 @@ const VehicleDetail = () => {
           {/* Documentación del vehículo */}
           <h3 className="title-section">Documentación</h3>
           <div className="vehicle-documentation">
-            <p>
+            <p className="vd-legend">
               <em>
                 Para modificar un documento en particular haga clic sobre el
                 mismo.
@@ -508,7 +507,7 @@ const VehicleDetail = () => {
           {/* Servicios y mantenimientos del vehículo */}
           <h3 className="title-section">Servicios y Mantenimientos</h3>
           <div className="vehicle-services">
-            <p>
+            <p className="vs-legend">
               <em>
                 Para modificar un servicio en particular haga clic sobre el
                 mismo.
