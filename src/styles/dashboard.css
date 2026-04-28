@@ -54,51 +54,43 @@ h2.title-section {
   margin-top: 0.5rem;
 }
 
-.license {
-  position: relative;
+.license h5 {
+  text-decoration: solid underline;
+}
+.license p {
+  display: block;
+  padding-left: 1rem;
+}
+.license .license-warning {
+  width: fit-content;
   display: flex;
+  color: red;
+  font-weight: bold;
   flex-direction: column;
-  margin: 0.5rem 0 0.5rem 0;
-  & h5 {
-    text-decoration: solid underline;
-  }
-  & p {
-    display: block;
-    padding-left: 1rem;
-  }
-  & .license-warning {
-    width: fit-content;
-    display: flex;
-    color: red;
-    font-weight: bold;
-    flex-direction: column;
-    align-items: center;
-    & .warn {
-      font-size: 1.75rem;
-    }
-    & .warn2 {
-      font-size: 1.25rem;
-    }
-  }
+  align-items: center;
+}
+.license .license-warning .warn {
+  font-size: 1.75rem;
+}
+.license .license-warning .warn2 {
+  font-size: 1.25rem;
 }
 
 /* imagen de usuario */
-.user-image {
-  width: 30%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+.img-uniform {
+  width: 100%;
+  max-width: 225px;
+  height: 225px;
+  display: block;
+  overflow: hidden;
 }
 
-.user-image img {
+.img-uniform img {
   width: 100%;
-  max-width: 200px;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
   border-radius: 10%;
-  -webkit-border-radius: 10%;
-  -moz-border-radius: 10%;
-  -ms-border-radius: 10%;
-  -o-border-radius: 10%;
 }
 
 /* info usuario */
@@ -153,28 +145,21 @@ table td {
     flex-direction: column;
     align-items: center;
   }
-
-  .user-image {
-    width: 100%;
+  /* imagen de usuario */
+  .img-uniform {
+    max-width: 120px;
+    height: 120px;
   }
 
   .user-info {
     width: 100%;
   }
 
-  .user-image img {
-    max-width: 160px;
+  .license .license-warning .warn {
+    font-size: 1.5rem;
   }
-
-  .license {
-    & .license-warning {
-      & .warn {
-        font-size: 1.5rem;
-      }
-      & .warn2 {
-        font-size: 1rem;
-      }
-    }
+  .license .license-warning .warn2 {
+    font-size: 1rem;
   }
 
   .user-cars p,

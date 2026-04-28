@@ -4,7 +4,7 @@ export const formatDate = (dateString) => {
   if (isNaN(date.getTime())) return "-";
   const options = {
     year: "numeric",
-    month: "long",
+    month: "short",
     day: "numeric",
     // hour: "2-digit",
     // minute: "2-digit",

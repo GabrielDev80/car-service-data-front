@@ -75,6 +75,7 @@ const VehicleDetail = () => {
         headers: {
           "Content-Type": "multipart/form-data",
         },
+        timeout: 30000, // 30 segundos para uploads
       });
       Swal.fire({
         position: "top-end",
@@ -104,6 +105,38 @@ const VehicleDetail = () => {
   // Función para manejar el cambio de datos en el formulario
   const handleInputChange = (e) => {
     setEditData({ ...editData, [e.target.name]: e.target.value });
+  };
+
+  // Función para eliminar un documento
+  const handleDeleteDocument = async (event, documentId) => {
+    event.stopPropagation(); // Evitar que se dispare el click de la fila
+
+    const result = await Swal.fire({
+      title: "¿Eliminar este documento?",
+      text: "Esta acción no se puede deshacer",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      const updateDocs = currentVehicle.documentation.filter(
+        (doc) => doc._id !== documentId,
+      );
+
+      await api.patch(`/vehicles/${currentVehicle._id}`, {
+        documentation: updateDocs,
+      });
+
+      setCurrentVehicle({ ...currentVehicle, documentation: updateDocs });
+
+      Swal.fire("Eliminado", "El documento fue eliminado", "success");
+    } catch (error) {
+      Swal.fire("Error", "No se pudo eliminar el documento", error);
+    }
   };
 
   // Función para manejar el submit del formulario
@@ -140,8 +173,9 @@ const VehicleDetail = () => {
 
             {/* Imagen del vehículo */}
             <div className="vehicle-image-container">
-              <div className="vehicle-image">
+              <div className="img-uniform">
                 <img
+                  className="img"
                   src={
                     Array.isArray(currentVehicle.thumbnails) &&
                     currentVehicle.thumbnails.length > 0
@@ -172,6 +206,7 @@ const VehicleDetail = () => {
                   multiple
                 />
               </div>
+              {/* Carga de imágenes */}
               {selectedImages && selectedImages.length > 0 && (
                 <div style={{ marginTop: 10 }}>
                   <span>Imágen/es seleccionada/s:</span>
@@ -206,14 +241,13 @@ const VehicleDetail = () => {
                 </div>
               )}
             </div>
-
             {/* Información básica del vehículo */}
             <div className="vehicle-info">
               <form onSubmit={handleEditSubmit}>
-                <p>
+                {/* <p>
                   <span>Vehicle Id:</span>
                   {currentVehicle._id}
-                </p>
+                </p> */}
                 <div>
                   <span>Imágenes:</span>
                   {currentVehicle.thumbnails?.length > 0 ? (
@@ -223,14 +257,10 @@ const VehicleDetail = () => {
                           <li
                             key={idx}
                             style={{
-                              display: "inline-block",
-                              marginRight: 10,
                               border:
                                 idx === mainImageIdx
-                                  ? "2px solid #007bff"
+                                  ? "2px solid #ff0000"
                                   : "2px solid transparent",
-                              borderRadius: 4,
-                              cursor: "pointer",
                             }}
                             onClick={() => setMainImageIdx(idx)}
                             title="Seleccionar como principal"
@@ -251,7 +281,7 @@ const VehicleDetail = () => {
                           </li>
                         ))}
                       </ul>
-                      <span className="span">
+                      <span className="legend">
                         Hacé clic en una imagen para mostrarla como principal
                       </span>
                     </div>
@@ -259,9 +289,10 @@ const VehicleDetail = () => {
                     <p>No hay imágenes disponibles</p>
                   )}{" "}
                 </div>
+                {/* Datos del vehículo */}
                 <div className="inputs">
-                  <p>
-                    <span>Marca:</span>
+                  <p className="item">
+                    <span className="t-item">Marca:</span>
                     {isEditing ? (
                       <input
                         type="text"
@@ -279,8 +310,8 @@ const VehicleDetail = () => {
                       currentVehicle.make
                     )}
                   </p>
-                  <p>
-                    <span>Modelo:</span>
+                  <p className="item">
+                    <span className="t-item">Modelo:</span>
                     {isEditing ? (
                       <input
                         type="text"
@@ -298,8 +329,8 @@ const VehicleDetail = () => {
                       currentVehicle.model
                     )}
                   </p>
-                  <p>
-                    <span>Año:</span>
+                  <p className="item">
+                    <span className="t-item">Año:</span>
                     {isEditing ? (
                       <input
                         type="text"
@@ -317,8 +348,8 @@ const VehicleDetail = () => {
                       currentVehicle.year
                     )}
                   </p>
-                  <p>
-                    <span>Color:</span>
+                  <p className="item">
+                    <span className="t-item">Color:</span>
                     {isEditing ? (
                       <input
                         type="text"
@@ -336,8 +367,8 @@ const VehicleDetail = () => {
                       currentVehicle.color
                     )}
                   </p>
-                  <p>
-                    <span>Patente:</span>
+                  <p className="item">
+                    <span className="t-item">Patente:</span>
                     {isEditing ? (
                       <input
                         type="text"
@@ -356,17 +387,18 @@ const VehicleDetail = () => {
                     )}
                   </p>
                 </div>
+                {/* Info Date */}
                 <div className="info-date">
-                  <p>
-                    <span>Fecha de creación:</span>
+                  <p className="item">
+                    <span className="t-item">Fecha de creación:</span>
                     {formatDate(currentVehicle.createdAt)}
                   </p>
-                  <p>
-                    <span>Última modificación:</span>
+                  <p className="item">
+                    <span className="t-item">Última modificación:</span>
                     {formatDate(currentVehicle.updatedAt)}
                   </p>
                 </div>
-
+                {/* Button */}
                 <div className="form-buttons">
                   {isEditing && (
                     <Button
@@ -408,7 +440,7 @@ const VehicleDetail = () => {
           {/* Documentación del vehículo */}
           <h3 className="title-section">Documentación</h3>
           <div className="vehicle-documentation">
-            <p>
+            <p className="vd-legend">
               <em>
                 Para modificar un documento en particular haga clic sobre el
                 mismo.
@@ -426,8 +458,8 @@ const VehicleDetail = () => {
                 <tbody>
                   {currentVehicle.documentation.map((document) => (
                     <tr
+                      className="doc-item"
                       key={document._id}
-                      style={{ cursor: "pointer" }}
                       onClick={() => {
                         localStorage.setItem(
                           "docToEdit",
@@ -436,9 +468,25 @@ const VehicleDetail = () => {
                         navigate("/vehicleDocsForm");
                       }}
                     >
-                      <td>{capitalizeFirstLetter(document.document_name)}</td>
-                      <td>{document.description}</td>
-                      <td>{formatDate(document.expiration_date)}</td>
+                      <td>
+                        <p className="table-content">
+                          {capitalizeFirstLetter(document.document_name)}
+                        </p>
+                      </td>
+                      <td>
+                        <p className="table-content">{document.description}</p>
+                      </td>
+                      <td className="trash">
+                        <p className="table-content">
+                          {formatDate(document.expiration_date)}
+                        </p>
+                        <i
+                          className="bi bi-trash text-danger"
+                          style={{ cursor: "pointer", fontSize: "1.2rem" }}
+                          title="Eliminar documento"
+                          onClick={(e) => handleDeleteDocument(e, document._id)}
+                        ></i>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -459,7 +507,7 @@ const VehicleDetail = () => {
           {/* Servicios y mantenimientos del vehículo */}
           <h3 className="title-section">Servicios y Mantenimientos</h3>
           <div className="vehicle-services">
-            <p>
+            <p className="vs-legend">
               <em>
                 Para modificar un servicio en particular haga clic sobre el
                 mismo.
