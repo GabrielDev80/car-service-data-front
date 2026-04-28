@@ -1,7 +1,7 @@
 import "../../styles/loginForm.css";
+
 import { useState } from "react";
 import api from "../../services/axios";
-import PasswordInput from "../PasswordInput";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../Button";
@@ -14,13 +14,17 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
-
   const handleChange = (event) => {
     const { id, value } = event.target;
     setFormData({
       ...formData,
       [id]: value,
     });
+  };
+
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (event) => {
@@ -84,34 +88,55 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container container-login">
       <div className="row">
         <div className="col-12">
           <form onSubmit={handleSubmit}>
+            {/* Email */}
             <div className="input-group">
               <input
                 type="email"
-                className="form-control mb-2"
+                className="form-control mb-2 email-input-group"
                 id="email"
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Ingrese su email"
+                autoComplete="emai"
+                title="Introduce tu email"
+                required
               />
-              {/* <span className="input-group-text">@</span> */}
             </div>
-            <PasswordInput
-              value={formData.password}
-              onChange={(e) =>
-                handleChange({
-                  target: { id: "password", value: e.target.value },
-                })
-              }
-            />
-            <p className="my-3">Ambos campos son obligatorios.</p>
+            {/* Password */}
+            <div className="input-group password-input-group">
+              <input
+                className="form-control password-input"
+                type={showPassword ? "text" : "password"}
+                id="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Ingrese su contraseña"
+                autoComplete="current-password"
+                title="Introduce tu contraseña"
+                required
+              />
+              <span
+                className="input-group-text"
+                onClick={togglePasswordVisibility}
+                style={{ cursor: "pointer" }}
+              >
+                <img
+                  className="input-image-eye"
+                  src={showPassword ? "/eye-slash-fill.svg" : "/eye-fill.svg"}
+                  alt="Toggle Password Visibility"
+                />
+              </span>
+            </div>
+            <p className="my-3 required">Ambos campos son obligatorios.</p>
+            {/* Submit Button */}
             <Button
               type="submit"
               text="Iniciar Sesión"
-              className="btn-primary button"
+              className="btn btn-primary buttons"
             />
           </form>
         </div>
