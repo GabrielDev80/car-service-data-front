@@ -1,3 +1,4 @@
+.container-register,
 .container-login {
   position: relative;
   width: 100%;
@@ -8,9 +9,11 @@
   & form {
     display: flex;
     flex-direction: column;
+    gap: 10px;
     width: auto;
     /* Email */
-    & .email-input-group {
+    & .item-input-group,
+    .email-input-group {
       font-size: 1.2rem;
     }
     & .required {
@@ -40,10 +43,13 @@
 }
 
 @media (max-width: 768px) {
+  .container-register,
   .container-login {
     & form {
       width: 100%;
-      & .email-input-group,
+      gap: 5px;
+      & .item-input-group,
+      .email-input-group,
       .password-input-group .password-input {
         font-size: 1rem;
       }
