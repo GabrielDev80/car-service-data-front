@@ -101,7 +101,7 @@ const LoginForm = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Ingrese su email"
-                autoComplete="emai"
+                autoComplete="email"
                 title="Introduce tu email"
                 required
               />
