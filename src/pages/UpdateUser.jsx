@@ -27,7 +27,7 @@ const UpdateUser = () => {
           );
         }
         const response = await api.get(`/users/${userId}`);
-        // console.log("Data: ", response);
+
         setCurrentUser(response.data.payload);
         setThumbnailPreview(response.data.payload.thumbnail || null);
       } catch (err) {
@@ -259,6 +259,7 @@ const UpdateUser = () => {
                     name="username"
                     value={currentUser.username ?? ""}
                     onChange={handleInputChange}
+                    disabled
                   />
                 </div>
                 <div>
@@ -392,6 +393,7 @@ const UpdateUser = () => {
                     <p>
                       <span>Alias:</span>
                       {currentUser.username}
+                      <cite> (No editable)</cite>
                     </p>
                     <p>
                       <span>Teléfono:</span>
