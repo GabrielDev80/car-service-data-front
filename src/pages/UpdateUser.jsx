@@ -60,17 +60,22 @@ const UpdateUser = () => {
           [fieldName]: value,
         },
       }));
+      // Manejo de campos anidados en 'lisence'
+    } else if (name.startsWith("license.")) {
+      const fieldName = name.replace("license.", "");
+      setCurrentUser((prev) => ({
+        ...prev,
+        license: {
+          ...prev.license,
+          [fieldName]: value,
+        },
+      }));
+      // Manejo de campos planos
     } else {
-      if (name.startsWith("license.")) {
-        const fieldName = name.replace("license.", "");
-        setCurrentUser((prev) => ({
-          ...prev,
-          license: {
-            ...prev.license,
-            [fieldName]: value,
-          },
-        }));
-      }
+      setCurrentUser((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
     }
   };
 
@@ -201,6 +206,7 @@ const UpdateUser = () => {
               }}
             >
               <div className="inputs">
+                {/* Imágen del usuario */}
                 <div>
                   <input
                     type="file"
@@ -221,6 +227,7 @@ const UpdateUser = () => {
                     />
                   )}
                 </div>
+                {/* Datos del usuario */}
                 <div>
                   <label htmlFor="first_name">Nombre:</label>
                   <input
@@ -297,6 +304,7 @@ const UpdateUser = () => {
                     onChange={handleInputChange}
                   />
                 </div>
+                {/* Licencia */}
                 <div className="licenses">
                   <h5>Licencia Linti</h5>
                   <label htmlFor="psichoDate">Psicofísico:</label>
@@ -337,6 +345,7 @@ const UpdateUser = () => {
                   />
                 </div>
               </div>
+              {/* Botones de acción */}
               <div className="form-buttons">
                 <button
                   type="submit"
@@ -357,6 +366,7 @@ const UpdateUser = () => {
             /* Modo visualización */
             <>
               <div className="col-12 text-start user">
+                {/* Imágen del usuario */}
                 <div className="user-image">
                   <img
                     src={
@@ -368,6 +378,7 @@ const UpdateUser = () => {
                     // style={{ width: "100px", height: "100px" }}
                   />
                 </div>
+                {/* Datos del usuario */}
                 <div className="user-info">
                   <div className="user-data">
                     <p>
@@ -410,6 +421,7 @@ const UpdateUser = () => {
                     ) : null}
                   </div>
                 </div>
+                {/* Licencia */}
                 <div className="license">
                   {hasAnyData(currentUser.linti) ? (
                     <>
@@ -445,6 +457,7 @@ const UpdateUser = () => {
                     </>
                   ) : null}
                 </div>
+                {/* Botones de acción */}
                 <div className="buttons">
                   <button
                     className="btn btn-outline-primary btn-lg"
@@ -468,26 +481,6 @@ const UpdateUser = () => {
               </div>
             </>
           )}
-          {/*           {!isEditing && (
-            <>
-              <div className="buttons">
-                                 <button
-                  className="btn btn-outline-success btn-lg"
-                  onClick={returnToDashboard}
-                >
-                  Regresar al Dashboard
-                </button>
-                <button
-                  className="btn btn-outline-danger btn-lg"
-                  onClick={handleLogout}
-                >
-                  Cerrar sesión
-                </button>
-
-              </div>
-            </>
-          )}
- */}
         </div>
       </div>
     </>
